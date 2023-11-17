@@ -22,7 +22,9 @@ class GameVis {
             .append("g")
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-        vis.updateVis();
+        console.log(vis.data)
+        vis.wrangleData();
+        // vis.updateVis();
     }
     updateVis() {
         let vis = this;
@@ -62,7 +64,29 @@ class GameVis {
         });
     }
 
+    wrangleData() {
+        let vis = this;
 
+        // adding the winner and loser of the games as a variable per game
+        vis.data.forEach(function(game) {
+            let homeScore = parseInt(game.homeFinalScore, 10);
+            let visitorScore = parseInt(game.visitorFinalScore, 10);
+
+            if (homeScore > visitorScore) {
+                game.winner = game.homeTeamAbbr;
+                game.loser = game.visitorTeamAbbr;
+            } else if (visitorScore > homeScore) {
+                game.winner = game.visitorTeamAbbr;
+                game.loser = game.homeTeamAbbr;
+            } else {
+                game.winner = 'Tie';
+                game.loser = 'Tie';
+            }
+        });
+        vis.updateVis();
+        console.log(vis.data)
+    }
+    //
     // updateVis() {
     //     let vis = this
     //
