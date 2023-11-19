@@ -57,7 +57,8 @@ class LogosVis {
 
             // Printing the team abbreviation on click
             image.on("click", function() {
-                console.log(teamAbbr);
+                console.log(teamAbbr)
+                handleLogoClick(teamAbbr);
             });
         });
     }

@@ -23,7 +23,18 @@ class DiagramVis {
             .append("g")
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
+        // Adding tooltip here
+        vis.tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
         vis.wrangleData();
+    }
+    highlightTeam(teamAbbr) {
+        let vis = this;
+        console.log('fired')
+        vis.highlightLines(teamAbbr)
+        // vis.updateVis();
     }
 
     updateVis() {
@@ -56,7 +67,8 @@ class DiagramVis {
                 .attr("y1", teamAPos.y + logoRadius)
                 .attr("x2", teamBPos.x + logoRadius)
                 .attr("y2", teamBPos.y + logoRadius)
-                .style("stroke", "grey")
+                .attr('class', game.homeTeamAbbr + ' ' + game.visitorTeamAbbr + ' ' + 'lineGame')
+                .style("stroke", "lightgrey")
                 .style("stroke-width", 2);
         });
 
@@ -79,28 +91,77 @@ class DiagramVis {
                 .attr("y", position.y)
                 .attr("width", logoRadius * 2)
                 .attr("height", logoRadius * 2)
-                .on("click", function() {
-                    console.log(teamAbbr);
-                    // Change color to gold on click
-                    let selectedLines = d3.selectAll("." + teamAbbr);
-                    console.log("Selected lines:", selectedLines.size()); // Log how many items are selected
-
-                    selectedLines.style("stroke", "gold");
-
-                    // If the lines still don't change color, check for issues with styles being overwritten
+                .on("mouseover", function(event, d) {
+                    // Reset the line colors from the selected at the top
+                    let selectedLines = d3.select(".lineGame")
+                    console.log(selectedLines)
                     selectedLines.each(function() {
-                        console.log("Current stroke color:", d3.select(this).style("stroke"));
+                        let line = d3.select(this);
+                        line.style('stroke', 'lightgrey')
+                    });
+                    vis.highlightLines(teamAbbr);
+                    // Determine if the Logo is on the right or left side of the circle as well as top or bottom
+                    let onRightSide = position.x + logoRadius > vis.width / 2;
+                    let onBottomSide = position.y + logoRadius > vis.width /2;
+
+                    // Set tooltip content
+                    vis.tooltip.html(`
+                 <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 5px">
+                     <strong class="tooltip-title">${teamAbbr}</strong><br>
+                         <table class="tooltip-table">
+                         <tr>
+                                <td>Wins</td>
+                                <td>Display Statistics here</td>
+                         </tr>
+                         </table>
+                 </div>`);
+
+                    // Position the tooltip on the left or right of the logo
+                    let tooltipX = onRightSide ? event.pageX + 50 : event.pageX - 100;
+                    let tooltipY = onBottomSide ? event.pageY + 50: event.pageY - 25;
+
+                    // Show tooltip
+                    vis.tooltip
+                        .style("left", tooltipX + "px")
+                        .style("top", tooltipY + "px")
+                        .transition()
+                        .duration(200)
+                        .style("opacity", .9)
+
+                })
+                .on("mouseout", function() {
+                    let selectedLines = d3.selectAll("." + teamAbbr);
+                    selectedLines.each(function() {
+                        let line = d3.select(this);
+                        line.style("stroke", "lightgrey");
                     });
                 })
-                // .on("mouseout", function() {
-                //     // Revert the lines color back to grey when not hovering over the logo
-                //     d3.selectAll("." + teamAbbr)
-                //         .style("stroke", "grey");
-                // });
-
         });
     }
 
+    // Helper function to highlight lines
+    highlightLines(teamAbbr) {
+        let vis = this;
+        console.log('fired highlightLines')
+        let selectedLines = d3.selectAll("." + teamAbbr);
+        console.log(selectedLines)
+        selectedLines.each(function() {
+            let line = d3.select(this);
+            let lineClasses = line.attr('class').split(' ');
+            let otherTeamAbbr = lineClasses[0] === teamAbbr ? lineClasses[1] : lineClasses[0];
+
+            // Find the game for the line
+            let game = vis.data.find(g => (g.homeTeamAbbr === teamAbbr || g.visitorTeamAbbr === teamAbbr) &&
+                (g.homeTeamAbbr === otherTeamAbbr || g.visitorTeamAbbr === otherTeamAbbr));
+
+            // Check if teamAbbr is the winner or loser and change line color
+            if (game.winner === teamAbbr) {
+                line.style("stroke", "green");
+            } else if (game.loser === teamAbbr) {
+                line.style("stroke", "red");
+            }
+        });
+    }
     wrangleData() {
             let vis = this;
 
