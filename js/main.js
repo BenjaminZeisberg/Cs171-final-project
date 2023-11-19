@@ -3,7 +3,7 @@ let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
 // Declaring global variables
-let diagramVis;
+let diagramVis, winsTime;
 
 // Step 1 Load data using promises
 
@@ -28,6 +28,7 @@ Promise.all(promises)
 // Creating the Vis
 function createVis(data) {
     let games = data[0]
+    console.log(games);
     // let players = data[1]
     // let plays = data[2]
     // let teams = data[3]
@@ -40,6 +41,7 @@ function createVis(data) {
     // Creating positional Game Visualization.
     let logosVis = new LogosVis("logosVis", games, teamsAbbr);
     diagramVis = new DiagramVis("diagramVis", games, teamsAbbr);
+    winsTime = new WinsVis("winsTime", games, teamsAbbr);
 }
 
 function handleLogoClick() {
