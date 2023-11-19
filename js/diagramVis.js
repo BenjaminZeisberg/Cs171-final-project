@@ -93,12 +93,6 @@ class DiagramVis {
                 .attr("height", logoRadius * 2)
                 .on("mouseover", function(event, d) {
                     // Reset the line colors from the selected at the top
-                    let selectedLines = d3.select(".lineGame")
-                    console.log(selectedLines)
-                    selectedLines.each(function() {
-                        let line = d3.select(this);
-                        line.style('stroke', 'lightgrey')
-                    });
                     vis.highlightLines(teamAbbr);
                     // Determine if the Logo is on the right or left side of the circle as well as top or bottom
                     let onRightSide = position.x + logoRadius > vis.width / 2;
@@ -142,9 +136,15 @@ class DiagramVis {
     // Helper function to highlight lines
     highlightLines(teamAbbr) {
         let vis = this;
-        console.log('fired highlightLines')
-        let selectedLines = d3.selectAll("." + teamAbbr);
-        console.log(selectedLines)
+        let selectedLines = d3.selectAll(".lineGame")
+        selectedLines.each(function() {
+            let line = d3.select(this);
+            line.style('stroke', 'lightgrey')
+        });
+
+        // console.log('fired highlightLines')
+        selectedLines = d3.selectAll("." + teamAbbr);
+        // console.log(selectedLines)
         selectedLines.each(function() {
             let line = d3.select(this);
             let lineClasses = line.attr('class').split(' ');
@@ -163,24 +163,24 @@ class DiagramVis {
         });
     }
     wrangleData() {
-            let vis = this;
+        let vis = this;
 
-            // adding the winner and loser of the games as a variable per game
-            vis.data.forEach(function(game) {
-                let homeScore = parseInt(game.homeFinalScore, 10);
-                let visitorScore = parseInt(game.visitorFinalScore, 10);
+        // adding the winner and loser of the games as a variable per game
+        vis.data.forEach(function(game) {
+            let homeScore = parseInt(game.homeFinalScore, 10);
+            let visitorScore = parseInt(game.visitorFinalScore, 10);
 
-                if (homeScore > visitorScore) {
-                    game.winner = game.homeTeamAbbr;
-                    game.loser = game.visitorTeamAbbr;
-                } else if (visitorScore > homeScore) {
-                    game.winner = game.visitorTeamAbbr;
-                    game.loser = game.homeTeamAbbr;
-                } else {
-                    game.winner = 'Tie';
-                    game.loser = 'Tie';
-                }
-            });
-            vis.updateVis();
+            if (homeScore > visitorScore) {
+                game.winner = game.homeTeamAbbr;
+                game.loser = game.visitorTeamAbbr;
+            } else if (visitorScore > homeScore) {
+                game.winner = game.visitorTeamAbbr;
+                game.loser = game.homeTeamAbbr;
+            } else {
+                game.winner = 'Tie';
+                game.loser = 'Tie';
+            }
+        });
+        vis.updateVis();
     }
 }
