@@ -1,13 +1,16 @@
-# Cs171-final-project
-The final project of CS171 will live here
+CS171 Final Project
+The final project of CS171 will live here.
 
-TO DO's: 
-Here are some of the things we will need to do moving forward.
-The first three visualizations are already connected when clicking on a logo. Yet when hovering over a line in the linePlots the other visualizations don't get highlighted yet.
-The play vis is static at the moment. We need to implement some sort of interaction to start a given play and have the dots move. These plays should also be the ones that we are interested in, in 
-showing. Such as when there are fumbles, or when the defensive linemen tackle the QB.
-Given the data we have there are so many more stats we can display, such as stats for every QB. Maybe we add another vis to show QB statistics.
-One of the questions/problems we are facing is that there are so many plays given that there are so many games and teams. So I am wondering if it makes more sense to put them on a database and 
-make an API request given one knows what team they are interested in seeing? Or should we rather load the whole and have more wait time for the user?
-Another thing is we want the logos to either stay on the top of the webpage when scrolling or on the side. Sort of like how on some websites you have a table of contents, that moves with the 
-scrolling.
+TO DO's
+Here are some of the things we need to do moving forward:
+
+Enhance Interaction with Line Plots: While the first three visualizations are connected to clicking on a logo, hovering over a line in the line plots does not yet highlight the other 
+visualizations. This interactivity needs to be implemented.
+
+Dynamic Play Visualization: The 'play vis' is currently static. We need to implement interaction to start a given play and animate the dots. These plays should be particularly interesting or 
+significant, like plays with fumbles or where defensive linemen tackle the QB.
+
+Expand Statistical Display: With the extensive data available, we can display more statistics, such as those for every QB. Consider adding another visualization to showcase QB statistics.
+
+Database Consideration for Play Data: Given the vast number of plays across numerous games and teams, it might be more efficient to store this data in a database. This approach needs further 
+exploration to determine its feasibility and implementation.
