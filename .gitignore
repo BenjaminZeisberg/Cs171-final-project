@@ -1,3 +1,4 @@
 # Ignoring all csv and json files
 #*.csv
 *.json.DS_Store
+*.DS_Store
