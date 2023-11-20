@@ -39,9 +39,13 @@ class DiagramVis {
     updateVis() {
         let vis = this;
 
-        const logoRadius = 25; // Half of logoWidth
-        const circleRadius = 300; // Radius of the whole circle layout
-        const center = { x: vis.width / 2, y: vis.height / 2 }; // Assuming vis.width and vis.height are defined
+        const logoRadius = 25;
+        const circleRadius = 300;
+        const center = {
+            x: (vis.width - circleRadius) / 2 + 90,
+            y: (vis.height - circleRadius)
+        };
+
 
         // Function to calculate the position of each logo on the circle
         function getLogoPosition(index, total) {
@@ -106,15 +110,17 @@ class DiagramVis {
 
                     // Set tooltip content
                     vis.tooltip.html(`
-                 <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 5px, text-anchor: center;">
-                     <strong class="tooltip-title">${teamAbbr}</strong><br>
-                         <table class="tooltip-table">
-                         <tr>
-                                <td>Wins</td>
-                                <td>Display Statistics here</td>
-                         </tr>
-                         </table>
-                 </div>`);
+                         <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 5px, text-anchor: center;">
+                             <strong class="tooltip-title">${teamAbbr}</strong><br>
+                                 <table class="tooltip-table">
+                                 <tr>
+                                        <td>Wins</td>
+                                 </tr>
+                                 <tr>
+                                    <td>We will display the statistics for that team here</td>
+                                 </tr>
+                                 </table>
+                         </div>`);
 
                     // Calculate tooltip dimensions
                     let tooltipRect = vis.tooltip.node().getBoundingClientRect();
