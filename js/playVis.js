@@ -85,7 +85,6 @@ class PlayVis {
         vis.uniqueIds.forEach(nflId => {
             // Find the initial position for each ID
             let initialPos = vis.testPlay.find(d => d.nflId === nflId);
-            console.log(initialPos)
             vis.svg.append('circle')
                 .attr('cx', vis.xScale(initialPos.x)) // Use a scale function for x
                 .attr('cy', vis.yScale(initialPos.y)) // Use a scale function for y
