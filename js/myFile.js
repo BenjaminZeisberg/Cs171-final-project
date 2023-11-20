@@ -91,7 +91,7 @@ class WinsVis {
                 cumulativeData[team] = (cumulativeData[team] || 0) + points;
 
                 // Then push for current week
-                dataForChart.push({ week, team, points, cumulative: cumulativeData[team] });
+                dataForChart.push({week, team, points, cumulative: cumulativeData[team]});
             });
         });
 
@@ -109,7 +109,7 @@ class WinsVis {
 
         let cumulativeYScale = d3.scaleLinear()
             .domain([0, d3.max(filteredDataForChart, d => d.cumulative)])
-            .range([vis.height*2, 0]);
+            .range([vis.height * 2, 0]);
 
         let xAxis = d3.axisBottom(xScale);
         let yAxis = d3.axisLeft(yScale);
@@ -135,7 +135,7 @@ class WinsVis {
         let teams = Array.from(new Set(dataForChart.map(d => d.team)));
         let colorScale = d3.scaleOrdinal().domain(teams).range(d3.schemeCategory10);
 
-        teams.forEach(function(team) {
+        teams.forEach(function (team) {
             let teamData = dataForChart.filter(d => d.team === team);
 
             vis.svg.append("path")
@@ -144,10 +144,10 @@ class WinsVis {
                 .attr("stroke", colorScale(team))
                 .attr("stroke-width", 2)
                 .attr("d", line)
-
+                .attr("class", team + ' ' + 'lineGame')
                 // Grey out initially
                 .style("stroke", "lightgrey")
-                .on("mouseover", function(event, d) {
+                .on("mouseover", function (event, d) {
 
                     // Style on hover using color scale
                     d3.select(this).style("stroke", colorScale(team));
@@ -170,7 +170,7 @@ class WinsVis {
                         .duration(200)
                         .style("opacity", 0.9);
                 })
-                .on("mouseout", function() {
+                .on("mouseout", function () {
 
                     // Reset
                     d3.select(this).style("stroke", "lightgrey");
@@ -194,14 +194,14 @@ class WinsVis {
 
         // New axes
         cumulativeChartGroup.append("g")
-            .attr("transform", "translate(0," + (vis.height*2 ) + ")")
+            .attr("transform", "translate(0," + (vis.height * 2) + ")")
             .call(xAxis);
 
         cumulativeChartGroup.append("g")
             .call(yAxisCumulative);
 
         // Draw a new line for each team
-        teams.forEach(function(team) {
+        teams.forEach(function (team) {
             let teamData = dataForChart.filter(d => d.team === team);
 
             cumulativeChartGroup.append("path")
@@ -210,10 +210,11 @@ class WinsVis {
                 .attr("stroke", colorScale(team))
                 .attr("stroke-width", 2)
                 .attr("d", cumulativeLine)
+                .attr("class", team + ' ' + 'lineGame')
 
                 // Same styling/hover functionality as the chart above
                 .style("stroke", "lightgrey")
-                .on("mouseover", function(event, d) {
+                .on("mouseover", function (event, d) {
                     d3.select(this).style("stroke", colorScale(team));
 
                     let mouseX = d3.pointer(event)[0];
@@ -232,7 +233,7 @@ class WinsVis {
                         .duration(200)
                         .style("opacity", 0.9);
                 })
-                .on("mouseout", function() {
+                .on("mouseout", function () {
 
                     // Reset and hide again on mouseout
                     d3.select(this).style("stroke", "lightgrey");
@@ -273,7 +274,7 @@ class WinsVis {
 
         cumulativeChartGroup.append("text")
             .attr("x", vis.width / 2)
-            .attr("y", vis.height*2 + vis.margin.top)
+            .attr("y", vis.height * 2 + vis.margin.top)
             .attr("text-anchor", "middle")
             .style("font-size", "12px")
             .text("Week");
@@ -284,6 +285,21 @@ class WinsVis {
             .attr("text-anchor", "middle")
             .style("font-size", "12px")
             .text("Cumulative Points");
-
+    }
+    highlightTeam(teamAbbr) {
+        console.log('fired myFile.js')
+        let vis = this;
+        let selectedLines = d3.selectAll(".lineGame")
+        selectedLines.each(function () {
+            let line = d3.select(this);
+            line.style('stroke', 'lightgrey')
+        });
+        selectedLines = d3.selectAll("." + teamAbbr).each(function() {
+            let line = d3.select(this);
+            let lineClasses = line.attr('class').split(' ');
+            if (lineClasses.length === 2) {
+                line.style('stroke', 'red')
+            }
+        });
     }
 }

@@ -14,8 +14,7 @@ class DiagramVis {
         vis.margin = {top: 20, right: 0, bottom: 200, left: 140};
 
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
-        // vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
-        vis.height = 1000
+        vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height + 600;
         // SVG drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
             .attr("width", vis.width + vis.margin.left + vis.margin.right)
@@ -161,24 +160,30 @@ class DiagramVis {
             line.style('stroke', 'lightgrey')
         });
 
-        // console.log('fired highlightLines')
         selectedLines = d3.selectAll("." + teamAbbr);
-        // console.log(selectedLines)
         selectedLines.each(function() {
             let line = d3.select(this);
+
             let lineClasses = line.attr('class').split(' ');
-            let otherTeamAbbr = lineClasses[0] === teamAbbr ? lineClasses[1] : lineClasses[0];
+            if (lineClasses.length === 3) {
+                let otherTeamAbbr = lineClasses[0] === teamAbbr ? lineClasses[1] : lineClasses[0];
+                // Find the game for the line
+                let game = vis.data.find(g => (g.homeTeamAbbr === teamAbbr || g.visitorTeamAbbr === teamAbbr) &&
+                    (g.homeTeamAbbr === otherTeamAbbr || g.visitorTeamAbbr === otherTeamAbbr));
 
-            // Find the game for the line
-            let game = vis.data.find(g => (g.homeTeamAbbr === teamAbbr || g.visitorTeamAbbr === teamAbbr) &&
-                (g.homeTeamAbbr === otherTeamAbbr || g.visitorTeamAbbr === otherTeamAbbr));
-
-            // Check if teamAbbr is the winner or loser and change line color
-            if (game.winner === teamAbbr) {
-                line.style("stroke", "green");
-            } else if (game.loser === teamAbbr) {
-                line.style("stroke", "red");
+                console.log(game)
+                // Check if teamAbbr is the winner or loser and change line color
+                if (game.winner === teamAbbr) {
+                    line.style("stroke", "green");
+                } else if (game.loser === teamAbbr) {
+                    line.style("stroke", "red");
+                }
             }
+            else {
+                // here you could style all other lines on the vis that have the class attribute .TeamAbbr .lineGame
+                line.style('stroke', 'red')
+            }
+
         });
     }
     wrangleData() {

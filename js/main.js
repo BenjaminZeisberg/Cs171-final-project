@@ -56,6 +56,7 @@ function createVis(data) {
 
 function handleLogoClick(teamAbbr) {
     // Highlighting the selected team
-    console.log(diagramVis)
+    winsTime.highlightTeam(teamAbbr);
     diagramVis.highlightTeam(teamAbbr);
+
 }
