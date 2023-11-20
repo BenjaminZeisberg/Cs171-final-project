@@ -46,10 +46,11 @@ class DiagramVis {
 
         // Function to calculate the position of each logo on the circle
         function getLogoPosition(index, total) {
-            const angle = (index / total) * 2 * Math.PI; // Angle for the circular position
+            let angle = (index / total) * 2 * Math.PI; // Angle for the circular position
             return {
                 x: center.x + circleRadius * Math.cos(angle) - logoRadius,
-                y: center.y + circleRadius * Math.sin(angle) - logoRadius
+                y: center.y + circleRadius * Math.sin(angle) - logoRadius,
+                angle: angle
             };
         }
 
@@ -94,13 +95,19 @@ class DiagramVis {
                 .on("mouseover", function(event, d) {
                     // Reset the line colors from the selected at the top
                     vis.highlightLines(teamAbbr);
+                    // OLD IMPLEMENTATION
                     // Determine if the Logo is on the right or left side of the circle as well as top or bottom
-                    let onRightSide = position.x + logoRadius > vis.width / 2;
-                    let onBottomSide = position.y + logoRadius > vis.width /2;
+                    // let onRightSide = position.x + logoRadius > vis.width / 2;
+                    // let onBottomSide = position.y + logoRadius > vis.width /2;
+
+                    // // Position the tooltip on the left or right of the logo
+                    // let tooltipX = onRightSide ? event.pageX + 50 : event.pageX - 100;
+                    // let tooltipY = onBottomSide ? event.pageY + 50: event.pageY - 25;
+
 
                     // Set tooltip content
                     vis.tooltip.html(`
-                 <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 5px">
+                 <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 5px, text-anchor: center;">
                      <strong class="tooltip-title">${teamAbbr}</strong><br>
                          <table class="tooltip-table">
                          <tr>
@@ -110,9 +117,21 @@ class DiagramVis {
                          </table>
                  </div>`);
 
-                    // Position the tooltip on the left or right of the logo
-                    let tooltipX = onRightSide ? event.pageX + 50 : event.pageX - 100;
-                    let tooltipY = onBottomSide ? event.pageY + 50: event.pageY - 25;
+                    // Calculate tooltip dimensions
+                    let tooltipRect = vis.tooltip.node().getBoundingClientRect();
+                    let tooltipWidth = tooltipRect.width;
+                    let tooltipHeight = tooltipRect.height;
+
+                    // Used to be 70, just testing having the tooltipwidth/3 for now
+                    let baseOffset = tooltipWidth/3; // Base offset distance
+                    let angleOffsetFactor = Math.abs(Math.cos(position.angle)); // Factor based on angle
+                    let dynamicOffset = baseOffset * (1 + angleOffsetFactor); // Dynamic offset
+
+                    let offset_x = dynamicOffset * Math.cos(position.angle);
+                    let offset_y = dynamicOffset * Math.sin(position.angle);
+
+                    let tooltipX = event.pageX + offset_x - tooltipWidth / 2;
+                    let tooltipY = event.pageY + offset_y - tooltipHeight / 2;
 
                     // Show tooltip
                     vis.tooltip
