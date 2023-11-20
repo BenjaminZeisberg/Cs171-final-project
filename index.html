@@ -14,22 +14,54 @@
 
 
   <!-- Custom CSS code -->
-  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
 
 <div class="container">
     <div class="row">
-      <div class="col-12" id="logosVis"></div>
+        <div class="col-12">
+            <h2>Team Logos!</h2>
+            <p>Click any of these logos! It will make all interactions on the page point to that team.</p>
+        </div>
+        <div class="col-12" id="logosVis"></div>
     </div>
     <div class="row">
-      <div class="col-12" id="diagramVis"></div>
+        <div class="col-12">
+            <h2>Wins and cumulative wins over time! </h2>
+            <p>Here we display the wins over time. You can hover over each line to see how many points a given team has made until that week of games.</p>
+        </div>
+        <div class="col-12">
+            <div class="col-12" id="winsTime"></div>
+        </div>
     </div>
     <div class="row">
-        <div class="col-12" id="winsTime"></div>
+        <div class="col-12">
+            <h2>Inovative graph!</h2>
+            <p>Here you can see all teams at once. When hovering over a team logo you can see how they played, and red indicates that they lost to the other team, and green means they won. The Eagles have won all of their games so far! Who knows maybe they'll make it to the superbowl again!</p>
+        </div>
+        <div class="col-12" id="diagramVis"></div>
     </div>
     <div class="row">
+        <div class="col-12">
+            <h2>Individual Play Visualization</h2>
+            <p>As of now have a static visualization below, but we hope to show a team and their opponents scoring/winning/losing plays. The goal is to either have a play button where given pressed the circles start to move, and then depending on the outcome highlight some things.</p>
+        </div>
         <div class="col-12" id="playVis"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h2>To Do's</h2>
+            Here are some of the things we will need to do moving forward.
+            <ul>
+                <li>The first three visualizations are already connected when clicking on a logo. Yet when hovering over a line in the linePlots the other visualizations don't get highlighted yet.</li>
+                <li>The play vis is static at the moment. We need to implement some sort of interaction to start a given play and have the dots move. These plays should also be the ones that we are interested in, in showing. Such as when there are fumbles, or when the defensive linemen tackle the QB.</li>
+                <li>Given the data we have there are so many more stats we can display, such as stats for every QB. Maybe we add another vis to show QB statistics.</li>
+                <li>One of the questions/problems we are facing is that there are so many plays given that there are so many games and teams. So I am wondering if it makes more sense to put them on a database and make an API request given one knows what team they are interested in seeing? Or should we rather load the whole and have more wait time for the user?</li>
+                <li>Another thing is we want the logos to either stay on the top of the webpage when scrolling or on the side. Sort of like how on some websites you have a table of contents, that moves with the scrolling.</li>
+            </ul>
+        </div>
     </div>
 </div>
 
