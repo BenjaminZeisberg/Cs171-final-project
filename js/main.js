@@ -12,8 +12,8 @@ let promises = [
 
     // To spead up development we only include the games promise
     // d3.csv("data/players.csv"),
-    // d3.csv("data/plays.csv"),
-    // d3.csv("data/tackles.csv"),
+     d3.csv("data/plays.csv"),
+     d3.csv("data/tackles.csv"),
     // d3.csv('data/tracking_week_1.csv'),
 ];
 
@@ -29,6 +29,17 @@ Promise.all(promises)
 function createVis(data) {
     let games = data[0]
     console.log(games);
+
+
+    ///CHANGED
+    let plays = data[1]
+    console.log("plays:");
+    console.log(plays);
+
+    let tackles = data[2]
+    console.log("tackles:");
+    console.log(tackles);
+
     // let players = data[1]
     // let plays = data[2]
     // let teams = data[3]
