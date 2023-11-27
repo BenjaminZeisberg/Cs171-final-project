@@ -72,7 +72,7 @@ class DiagramVis {
                 .attr("x2", teamBPos.x + logoRadius)
                 .attr("y2", teamBPos.y + logoRadius)
                 .attr('class', game.homeTeamAbbr + ' ' + game.visitorTeamAbbr + ' ' + 'lineGame')
-                .style("stroke", "white")
+                .style("stroke", "lightgrey")
                 .style("stroke-width", 2);
         });
 
@@ -151,7 +151,7 @@ class DiagramVis {
                     let selectedLines = d3.selectAll("." + teamAbbr);
                     selectedLines.each(function() {
                         let line = d3.select(this);
-                        line.style("stroke", "white");
+                        line.style("stroke", "lightgrey");
                     });
                 })
         });
@@ -163,7 +163,7 @@ class DiagramVis {
         let selectedLines = d3.selectAll(".lineGame")
         selectedLines.each(function() {
             let line = d3.select(this);
-            line.style('stroke', 'white')
+            line.style('stroke', 'lightgrey')
         });
 
         selectedLines = d3.selectAll("." + teamAbbr);
@@ -180,9 +180,9 @@ class DiagramVis {
                 console.log(game)
                 // Check if teamAbbr is the winner or loser and change line color
                 if (game.winner === teamAbbr) {
-                    line.style("stroke", "#66af2b");
+                    line.style("stroke", "green");
                 } else if (game.loser === teamAbbr) {
-                    line.style("stroke", "#f56a4b");
+                    line.style("stroke", "red");
                 }
             }
             else {

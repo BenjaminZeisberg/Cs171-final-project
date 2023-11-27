@@ -146,7 +146,7 @@ class WinsVis {
                 .attr("d", line)
                 .attr("class", team + ' ' + 'lineGame')
                 // Grey out initially
-                .style("stroke", "white")
+                .style("stroke", "lightgrey")
                 .on("mouseover", function (event, d) {
 
                     // Style on hover using color scale
@@ -173,7 +173,7 @@ class WinsVis {
                 .on("mouseout", function () {
 
                     // Reset
-                    d3.select(this).style("stroke", "white");
+                    d3.select(this).style("stroke", "lightgrey");
                     vis.tooltip.transition().duration(200).style("opacity", 0);
                 });
         });
@@ -213,7 +213,7 @@ class WinsVis {
                 .attr("class", team + ' ' + 'lineGame')
 
                 // Same styling/hover functionality as the chart above
-                .style("stroke", "white")
+                .style("stroke", "lightgrey")
                 .on("mouseover", function (event, d) {
                     d3.select(this).style("stroke", colorScale(team));
 
@@ -236,7 +236,7 @@ class WinsVis {
                 .on("mouseout", function () {
 
                     // Reset and hide again on mouseout
-                    d3.select(this).style("stroke", "white");
+                    d3.select(this).style("stroke", "lightgrey");
                     vis.tooltip.transition().duration(200).style("opacity", 0);
                 });
         });
@@ -292,7 +292,7 @@ class WinsVis {
         let selectedLines = d3.selectAll(".lineGame")
         selectedLines.each(function () {
             let line = d3.select(this);
-            line.style('stroke', 'white')
+            line.style('stroke', 'lightgrey')
         });
         selectedLines = d3.selectAll("." + teamAbbr).each(function() {
             let line = d3.select(this);
