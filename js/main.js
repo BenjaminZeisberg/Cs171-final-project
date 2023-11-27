@@ -10,7 +10,7 @@ new fullpage('#fullpage', {
 });
 
 // Declaring global variables
-let diagramVis, winsTime, playVis, ;
+let diagramVis, winsTime, playVis, timelineVis;
 
 window.onload = function () {
     window.scrollTo(0, 0);
