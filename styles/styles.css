@@ -1,7 +1,35 @@
 body {
     padding-top: 80px;
+    background-color: #9da6b6 !important;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
 }
 
+body.loaded {
+    opacity: 1;
+}
+
+h1 {
+    text-align: center;
+    font-size: 100px;
+    padding: 30px;
+    color: white;
+    font-family: sans-serif Verdana;
+    background-color: #9da6b6;
+    border-radius: 100px 1px 100px 1px;
+    border: 15px solid white;
+}
+
+h2 {
+    padding: 20px;
+    color: white;
+    font-family: sans-serif Verdana;
+    background-color: #9da6b6;
+    border-radius: 75px 1px 75px 1px;
+    border: 15px solid white;
+    margin-bottom: 20px;
+    text-align: center;
+}
 .section {
     padding-top: 80px;
 }

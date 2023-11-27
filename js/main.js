@@ -12,6 +12,10 @@ new fullpage('#fullpage', {
 // Declaring global variables
 let diagramVis, winsTime, playVis;
 
+window.onload = function () {
+    window.scrollTo(0, 0);
+};
+
 // Step 1 Load data using promises
 
 let promises = [
@@ -58,8 +62,17 @@ function createVis(data) {
     let logosVis = new LogosVis("logosVis", games, teamsAbbr);
     diagramVis = new DiagramVis("diagramVis", games, teamsAbbr);
     winsTime = new WinsVis("winsTime", games, teamsAbbr);
-    playVis = new PlayVis("playVis", games, teamsAbbr, plays, testPlay);
+    // playVis = new PlayVis("playVis", games, teamsAbbr, plays, testPlay);
+
+    d3.xml("data/images/stadium.svg").then(function (xml) {
+        var svg = d3.select(".stadium-graphic").node();
+        svg.appendChild(xml.documentElement);
+    });
+
+
+    document.body.classList.add('loaded');
 }
+
 
 function handleLogoClick(teamAbbr) {
     console.log(teamAbbr)
