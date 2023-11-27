@@ -2,15 +2,12 @@
 let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
-// Initializing the fullpage.js library
-new fullpage('#fullpage', {
-    //options here
-    autoScrolling:true,
-    scrollHorizontally: true
-});
-
 // Declaring global variables
 let diagramVis, winsTime, playVis;
+
+window.onload = function () {
+    window.scrollTo(0, 0);
+};
 
 // Step 1 Load data using promises
 
@@ -21,7 +18,7 @@ let promises = [
     d3.csv("data/plays.csv"),
 
     // Test data to visualize a play
-    // d3.csv('data/testPlay.csv'),
+    d3.csv('data/testPlay.csv'),
 
     // To spead up development we only include the games promise
     d3.csv("data/plays.csv"),
@@ -29,6 +26,7 @@ let promises = [
     d3.csv("data/tackles.csv"),
     d3.csv('data/tracking_week_1.csv'),
 ];
+
 
 Promise.all(promises)
     .then(function (data) {
@@ -40,9 +38,10 @@ Promise.all(promises)
 
 // Creating the Vis
 function createVis(data) {
+
     let games = data[0]
     let plays = data[1]
-    // let testPlay = data[2]
+    let testPlay = data[2]
     let players = data[2]
     let teams = data[3]
     let trackingWeek1 = data[4]
@@ -59,10 +58,17 @@ function createVis(data) {
     diagramVis = new DiagramVis("diagramVis", games, teamsAbbr);
     winsTime = new WinsVis("winsTime", games, teamsAbbr);
     playVis = new PlayVis("playVis", games, teamsAbbr, plays, testPlay);
+
+    d3.xml("data/images/stadium.svg").then(function (xml) {
+        var svg = d3.select(".stadium-graphic").node();
+        svg.appendChild(xml.documentElement);
+    });
+
+
+    document.body.classList.add('loaded');
 }
 
 function handleLogoClick(teamAbbr) {
-    console.log(teamAbbr)
     // Highlighting the selected team
     winsTime.highlightTeam(teamAbbr);
     diagramVis.highlightTeam(teamAbbr);
