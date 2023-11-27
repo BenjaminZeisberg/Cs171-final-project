@@ -10,7 +10,7 @@ new fullpage('#fullpage', {
 });
 
 // Declaring global variables
-let diagramVis, winsTime, playVis;
+let diagramVis, winsTime, playVis, ;
 
 window.onload = function () {
     window.scrollTo(0, 0);
@@ -28,10 +28,11 @@ let promises = [
     d3.csv('data/testPlay.csv'),
 
     // To spead up development we only include the games promise
-    d3.csv("data/plays.csv"),
+    // d3.csv("data/plays.csv"),
     d3.csv("data/players.csv"),
     d3.csv("data/tackles.csv"),
     d3.csv('data/tracking_week_1.csv'),
+    d3.csv('data/timeline-text.csv'),
 ];
 
 Promise.all(promises)
@@ -46,10 +47,11 @@ Promise.all(promises)
 function createVis(data) {
     let games = data[0]
     let plays = data[1]
-    let testPlay = data[2]
-    // let players = data[2]
-    // let teams = data[3]
-    // let trackingWeek1 = data[4]
+    // let testPlay = data[2]
+    let players = data[2]
+    let teams = data[3]
+    let trackingWeek1 = data[4]
+    let timeline = data[5]
     // console.log(players)
     // console.log(plays)
     // console.log(teams)
@@ -62,7 +64,8 @@ function createVis(data) {
     let logosVis = new LogosVis("logosVis", games, teamsAbbr);
     diagramVis = new DiagramVis("diagramVis", games, teamsAbbr);
     winsTime = new WinsVis("winsTime", games, teamsAbbr);
-    playVis = new PlayVis("playVis", games, teamsAbbr, plays, testPlay);
+    // playVis = new PlayVis("playVis", games, teamsAbbr, plays, testPlay);
+    timelineVis = new TimelineVis("timeLine", timeline, teamsAbbr)
 
     d3.xml("data/images/stadium.svg").then(function (xml) {
         var svg = d3.select(".stadium-graphic").node();
