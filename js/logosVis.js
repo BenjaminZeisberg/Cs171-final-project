@@ -27,6 +27,7 @@ class LogosVis {
     updateVis() {
         let vis = this;
 
+        let logosStart = 300;
         let logoWidth = 50;
         let logoSpacing = 10;
         let logosPerRow = Math.ceil(vis.teams.length / 2);
@@ -36,7 +37,7 @@ class LogosVis {
             let rowIndex = Math.floor(index / logosPerRow);
             let columnIndex = index % logosPerRow;
 
-            let xPosition = columnIndex * (logoWidth + logoSpacing);
+            let xPosition = columnIndex * (logoWidth + logoSpacing) + logosStart;
             let yPosition = rowIndex * rowHeight;
 
             // Append a circle for the hover effect
@@ -65,7 +66,7 @@ class LogosVis {
 
     wrangleData() {
         let vis = this;
-        //
+
         // // adding the winner and loser of the games as a variable per game
         // vis.data.forEach(function(game) {
         //     let homeScore = parseInt(game.homeFinalScore, 10);

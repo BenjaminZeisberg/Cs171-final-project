@@ -44,7 +44,7 @@ class PlayVis {
             .attr('y', vis.yScale(0))
             .attr('width', vis.xScale(120))
             .attr('height', vis.yScale(53.3))
-            .attr('fill', '#828c23');
+            .attr('fill', 'green');
 
         // Draw the end zones
         vis.svg.append('rect')
@@ -52,14 +52,14 @@ class PlayVis {
             .attr('y', vis.yScale(0))
             .attr('width', vis.xScale(10)) // End zones are 10 yards deep
             .attr('height', vis.yScale(53.3))
-            .attr('fill', '#1B4079');
+            .attr('fill', 'blue');
 
         vis.svg.append('rect')
             .attr('x', vis.xScale(110)) // Start at 110 yards for the other end zone
             .attr('y', vis.yScale(0))
             .attr('width', vis.xScale(10))
             .attr('height', vis.yScale(53.3))
-            .attr('fill', '#1B4079');
+            .attr('fill', 'blue');
 
         // Draw yard lines
         for (let i = 10; i <= 110; i += 10) {
