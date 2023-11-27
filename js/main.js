@@ -2,6 +2,13 @@
 let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
+// Initializing the fullpage.js library
+new fullpage('#fullpage', {
+    //options here
+    autoScrolling:true,
+    scrollHorizontally: true
+});
+
 // Declaring global variables
 let diagramVis, winsTime, playVis;
 
@@ -14,7 +21,7 @@ let promises = [
     d3.csv("data/plays.csv"),
 
     // Test data to visualize a play
-    d3.csv('data/testPlay.csv'),
+    // d3.csv('data/testPlay.csv'),
 
     // To spead up development we only include the games promise
     d3.csv("data/plays.csv"),
@@ -35,7 +42,7 @@ Promise.all(promises)
 function createVis(data) {
     let games = data[0]
     let plays = data[1]
-    let testPlay = data[2]
+    // let testPlay = data[2]
     let players = data[2]
     let teams = data[3]
     let trackingWeek1 = data[4]
@@ -55,6 +62,7 @@ function createVis(data) {
 }
 
 function handleLogoClick(teamAbbr) {
+    console.log(teamAbbr)
     // Highlighting the selected team
     winsTime.highlightTeam(teamAbbr);
     diagramVis.highlightTeam(teamAbbr);
