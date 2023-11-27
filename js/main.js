@@ -25,7 +25,7 @@ let promises = [
     d3.csv("data/plays.csv"),
 
     // Test data to visualize a play
-    // d3.csv('data/testPlay.csv'),
+    d3.csv('data/testPlay.csv'),
 
     // To spead up development we only include the games promise
     // d3.csv("data/plays.csv"),
@@ -71,7 +71,6 @@ function createVis(data) {
         var svg = d3.select(".stadium-graphic").node();
         svg.appendChild(xml.documentElement);
     });
-
 
     document.body.classList.add('loaded');
 }

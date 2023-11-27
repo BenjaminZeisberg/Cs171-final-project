@@ -3,7 +3,7 @@ class PlayVis {
     constructor(_parentElement, _data, _teamAbbr, _plays, _testPlay) {
         this.parentElement = _parentElement;
         this.data = _data;
-        this.play = _plays;
+        // this.play = _plays;
         this.teams = _teamAbbr;
         this.testPlay = _testPlay;
         this.initVis();
@@ -14,7 +14,7 @@ class PlayVis {
 
         vis.margin = {top: 40, right: 0, bottom: 60, left: 60};
 
-        vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
+        vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right - 300;
         vis.height = 300 - vis.margin.top - vis.margin.bottom;
 
         // SVG drawing area
@@ -78,19 +78,44 @@ class PlayVis {
                 .attr('y', vis.yScale(53.3 / 2)) // Position at the middle of the field
                 .attr('fill', 'white')
                 .attr('text-anchor', 'middle')
+                .attr('class', 'jerseyNumbers')
                 .text(`${i}`);
         }
 
+        // // Creating the Slider
+        // var slider = document.getElementById('slider');
+        //
+        // noUiSlider.create(slider, {
+        //     start: [1],
+        //     connect: true,
+        //     range: {
+        //         'min': 1,
+        //         'max': 22
+        //     }
+        // });
+
         // Draw a circle for each unique ID
         vis.uniqueIds.forEach(nflId => {
+            console.log(vis.testPlay)
             // Find the initial position for each ID
-            let initialPos = vis.testPlay.find(d => d.nflId === nflId);
+            let initialPos = vis.testPlay.find(d => d.nflId === nflId && d.frameId === '1');
+            console.log(initialPos)
             vis.svg.append('circle')
-                .attr('cx', vis.xScale(initialPos.x)) // Use a scale function for x
-                .attr('cy', vis.yScale(initialPos.y)) // Use a scale function for y
-                .attr('r', 5)
-                .attr('fill', nflId === 'football' ? 'brown' : 'red')
-                .attr('class', 'player-circle')
+                    .attr('cx', vis.xScale(initialPos.x))
+                    .attr('cy', vis.yScale(initialPos.y))
+                    .attr('r', 10)
+                    .attr('fill', 'none')
+                    .attr('stroke', 'red')
+                    .attr('class', 'player-circle')
+                    .attr('data-nflid', nflId);
+
+            // Append text for jersey number
+            vis.svg.append('text')
+                .attr('x', vis.xScale(initialPos.x))
+                .attr('y', vis.yScale(initialPos.y) + 5)
+                .attr('text-anchor', 'middle')
+                .text(initialPos.jerseyNumber)
+                .attr('class', 'jersey-number')
                 .attr('data-nflid', nflId);
         });
     }
@@ -98,15 +123,16 @@ class PlayVis {
     wrangleData(teamAbbr) {
         let vis = this
 
-        // Map each team to its game IDs
-        let gamesTeam = vis.teams.map(team => {
-            let gameIds = vis.data.filter(game =>
-                game.homeTeamAbbr === team || game.visitorTeamAbbr === team
-            ).map(game => game.gameId);
-            return [team, gameIds];
-        });
+        // // Map each team to its game IDs
+        // let gamesTeam = vis.teams.map(team => {
+        //     let gameIds = vis.data.filter(game =>
+        //         game.homeTeamAbbr === team || game.visitorTeamAbbr === team
+        //     ).map(game => game.gameId);
+        //     return [team, gameIds];
+        // });
 
         vis.uniqueIds = new Set(vis.testPlay.map(d => d.nflId));
+        console.log(vis.uniqueIds)
         vis.updateVis();
     }
 }
