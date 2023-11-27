@@ -1,107 +1,104 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Final Project - Visualization</title>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Final Project - Visualization</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Neuton:300,400,400i,700,800" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Neuton:300,400,400i,700,800" rel="stylesheet">
 
-    <!-- CSS libraries -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <!-- CSS libraries -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <!-- FullPage.js css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.css" integrity="sha512-wCVOuVtxsXqrQK7tj9j4BvyfITQmpp7UE7mVilD7aieGLYFEIAa5UKTP1RapOf6dxQ9JIKAneakcyykWG4r4Ow==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <!-- Custom CSS code -->
-    <link rel="stylesheet" href="styles/styles.css">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-    <!-- Navigation bar -->
-    <div class="header">
-        <div id="logosVis"></div>
-    </div>
+  <!-- Custom CSS code -->
+  <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
 
-    <!-- Wrapper -->
-    <div id="fullpage">
-        <div class="section" id="section1">
-            <div class="container fluid">
-                        <h2>Team Logos!</h2>
-                        <p>Click any of these logos! It will make all interactions on the page point to that team.</p>
-<!--                        <div id="logosVis"></div>-->
-            </div>
+<div class="container">
+    <div class="row">
+        <h1>
+            Football Data
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2 data-aos="fade-right">Select your team below</h2>
+            <p>Click any of these logos! It will make all interactions on the page point to that team.</p>
         </div>
-        <div class="section" id="section2">
-            <div class="container fluid">
-                    <h2>Wins and cumulative wins over time! </h2>
-                    <p>Here we display the wins over time. You can hover over each line to see how many points a given team has made until that week of games.</p>
-                    <div id="winsTime"></div>
-            </div>
+        <div class="col-12" id="logosVis"></div>
+    </div>
+    <div class="row">
+        <div class="stadium-graphic" data-aos="zoom-in-right" data-aos-duration="1000">
+
         </div>
-
-        <div class="section" id="section3">
-            <div class="container fluid">
-                <h2>Innovative graph!</h2>
-                <p>Here you can see all teams at once. When hovering over a team logo you can see how they played, and red indicates that they lost to the other team, and green means they won. The Eagles have won all of their games so far! Who knows maybe they'll make it to the superbowl again!</p>
-                <div id="diagramVis"></div>
-            </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2 data-aos="fade-right">Wins and cumulative wins over time! </h2>
+            <p>Here we display the wins over time. You can hover over each line to see how many points a given team has made until that week of games.</p>
         </div>
-
-        <div class="section" id="section4">
-                <h2>Individual Play Visualization</h2>
-                <p>As of now have a static visualization below, but we hope to show a team and their opponents scoring/winning/losing plays. The goal is to either have a play button where given pressed the circles start to move, and then depending on the outcome highlight some things.</p>
-            <div id="playVis"></div>
+        <div class="col-12">
+            <div class="col-12" id="winsTime"></div>
         </div>
-
-<!--            <div class="row">-->
-<!--                <div class="col-12">-->
-<!--                    <h2>To Do's</h2>-->
-<!--                    Here are some of the things we will need to do moving forward.-->
-<!--                    <ul>-->
-<!--                        <li>The first three visualizations are already connected when clicking on a logo. Yet when hovering over a line in the linePlots the other visualizations don't get highlighted yet.</li>-->
-<!--                        <li>The play vis is static at the moment. We need to implement some sort of interaction to start a given play and have the dots move. These plays should also be the ones that we are interested in, in showing. Such as when there are fumbles, or when the defensive linemen tackle the QB.</li>-->
-<!--                        <li>Given the data we have there are so many more stats we can display, such as stats for every QB. Maybe we add another vis to show QB statistics.</li>-->
-<!--                        <li>One of the questions/problems we are facing is that there are so many plays given that there are so many games and teams. So I am wondering if it makes more sense to put them on a database and make an API request given one knows what team they are interested in seeing? Or should we rather load the whole and have more wait time for the user?</li>-->
-<!--                        <li>Another thing is we want the logos to either stay on the top of the webpage when scrolling or on the side. Sort of like how on some websites you have a table of contents, that moves with the scrolling.</li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--            </div>-->
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2 data-aos="fade-right">Innovative graph!</h2>
+            <p>Here you can see all teams at once. When hovering over a team logo you can see how they played, and red indicates that they lost to the other team, and green means they won. The Eagles have won all of their games so far! Who knows maybe they'll make it to the superbowl again!</p>
         </div>
+        <div class="col-12" id="diagramVis"></div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2 data-aos="fade-right">Individual Play Visualization</h2>
+            <p>As of now have a static visualization below, but we hope to show a team and their opponents scoring/winning/losing plays. The goal is to either have a play button where given pressed the circles start to move, and then depending on the outcome highlight some things.</p>
+        </div>
+        <div class="col-12" id="playVis"></div>
+    </div>
 
-    <!-- Load JS libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
+    <div class="row">
+        <div class="col-12">
+            <h2 data-aos="fade-right">To Do's</h2>
+            Here are some of the things we will need to do moving forward.
+            <ul>
+                <li>The first three visualizations are already connected when clicking on a logo. Yet when hovering over a line in the linePlots the other visualizations don't get highlighted yet.</li>
+                <li>The play vis is static at the moment. We need to implement some sort of interaction to start a given play and have the dots move. These plays should also be the ones that we are interested in, in showing. Such as when there are fumbles, or when the defensive linemen tackle the QB.</li>
+                <li>Given the data we have there are so many more stats we can display, such as stats for every QB. Maybe we add another vis to show QB statistics.</li>
+                <li>One of the questions/problems we are facing is that there are so many plays given that there are so many games and teams. So I am wondering if it makes more sense to put them on a database and make an API request given one knows what team they are interested in seeing? Or should we rather load the whole and have more wait time for the user?</li>
+                <li>Another thing is we want the logos to either stay on the top of the webpage when scrolling or on the side. Sort of like how on some websites you have a table of contents, that moves with the scrolling.</li>
+            </ul>
+        </div>
+    </div>
+</div>
 
-    <!-- d3 -->
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-
-
-    <!-- Visualization objects -->
-    <!--<script src="js/countvis.js"></script>-->
-    <!--<script src="js/agevis.js"></script>-->
-    <!--<script src="js/priovis.js"></script>-->
-
-    <!-- FullPage.js-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js" integrity="sha512-LGiXf+jHGTHcIybSsOWO3I/in+OObCkcEsWIZ7IyhzfD6RzD5qDUw2CK+JveuI7zTSEcDG//bIOvOpAJW2BWsg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <!-- Bootstrap JS and its dependencies -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-    <!-- Load data, create visualizations -->
-    <script src="js/main.js"></script>
-    <script src="js/logosVis.js"></script>
-    <script src="js/diagramVis.js"></script>
-    <script src="js/myFile.js"></script>
-    <script src="js/playVis.js"></script>
+<!-- Load JS libraries -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 
 
+<!-- d3 -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+
+
+<!-- Visualization objects -->
+<!--<script src="js/countvis.js"></script>-->
+<!--<script src="js/agevis.js"></script>-->
+<!--<script src="js/priovis.js"></script>-->
+
+<!-- Load data, create visualizations -->
+<script src="js/main.js"></script>
+<script src="js/logosVis.js"></script>
+<script src="js/diagramVis.js"></script>
+<script src="js/myFile.js"></script>
+<script src="js/playVis.js"></script>
 </body>
 </html>
