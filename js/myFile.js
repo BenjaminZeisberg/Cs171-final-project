@@ -31,7 +31,6 @@ class WinsVis {
             .attr("class", "tooltip")
             .style("opacity", 0);
 
-
         vis.wrangleData();
     }
 
@@ -65,7 +64,7 @@ class WinsVis {
 
 
         // Check
-        //console.log("Total Points by Team and Week:", JSON.stringify(pointsByTeamAndWeek, null, 2));
+        console.log("Total Points by Team and Week:", JSON.stringify(pointsByTeamAndWeek, null, 2));
         vis.pointsByTeamAndWeek = pointsByTeamAndWeek;
 
         vis.updateVis();
@@ -101,7 +100,7 @@ class WinsVis {
             .domain([0, d3.max(dataForChart, d => d.points)])
             .range([vis.height, 0]);
 
-        xScale = d3.scaleLinear()
+        let xScale = d3.scaleLinear()
             .domain([1, Object.keys(vis.pointsByTeamAndWeek).length])
             .range([0, vis.width]);
 
@@ -147,7 +146,7 @@ class WinsVis {
                 .attr("d", line)
                 .attr("class", team + ' ' + 'lineGame')
                 // Grey out initially
-                .style("stroke", "white")
+                .style("stroke", "lightgrey")
                 .on("mouseover", function (event, d) {
 
                     // Style on hover using color scale
@@ -174,7 +173,7 @@ class WinsVis {
                 .on("mouseout", function () {
 
                     // Reset
-                    d3.select(this).style("stroke", "white");
+                    d3.select(this).style("stroke", "lightgrey");
                     vis.tooltip.transition().duration(200).style("opacity", 0);
                 });
         });
@@ -214,7 +213,7 @@ class WinsVis {
                 .attr("class", team + ' ' + 'lineGame')
 
                 // Same styling/hover functionality as the chart above
-                .style("stroke", "white")
+                .style("stroke", "lightgrey")
                 .on("mouseover", function (event, d) {
                     d3.select(this).style("stroke", colorScale(team));
 
@@ -237,7 +236,7 @@ class WinsVis {
                 .on("mouseout", function () {
 
                     // Reset and hide again on mouseout
-                    d3.select(this).style("stroke", "white");
+                    d3.select(this).style("stroke", "lightgrey");
                     vis.tooltip.transition().duration(200).style("opacity", 0);
                 });
         });
@@ -286,17 +285,14 @@ class WinsVis {
             .attr("text-anchor", "middle")
             .style("font-size", "12px")
             .text("Cumulative Points");
-
     }
-
-
     highlightTeam(teamAbbr) {
         console.log('fired myFile.js')
         let vis = this;
         let selectedLines = d3.selectAll(".lineGame")
         selectedLines.each(function () {
             let line = d3.select(this);
-            line.style('stroke', 'white')
+            line.style('stroke', 'lightgrey')
         });
         selectedLines = d3.selectAll("." + teamAbbr).each(function() {
             let line = d3.select(this);
@@ -305,16 +301,5 @@ class WinsVis {
                 line.style('stroke', 'red')
             }
         });
-
-        let logoDisplayContainer = d3.select(".logo-display");
-
-        logoDisplayContainer.selectAll("img").remove();
-
-        let logoImage = logoDisplayContainer.append("img")
-            .attr("src", "data/logosWeb/" + teamAbbr + ".webp")
-            .attr("width", 500)
-            .attr("height", 500);
-
     }
-
 }
