@@ -3,7 +3,7 @@ let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
 // Declaring global variables
-let diagramVis, winsTime, playVis, xScale, selectionDomain;
+let diagramVis, winsTime, playVis, xScale, selectionDomain, timelineVis;
 
 window.onload = function () {
     window.scrollTo(0, 0);
@@ -25,6 +25,7 @@ let promises = [
     d3.csv("data/players.csv"),
     d3.csv("data/tackles.csv"),
     d3.csv('data/tracking_week_1.csv'),
+    d3.csv('data/timeline-text.csv')
 ];
 
 
@@ -45,6 +46,7 @@ function createVis(data) {
     let players = data[2]
     let teams = data[3]
     let trackingWeek1 = data[4]
+    let timelineText = data[7]
     // console.log(players)
     // console.log(plays)
     // console.log(teams)
@@ -58,6 +60,7 @@ function createVis(data) {
     diagramVis = new DiagramVis("diagramVis", games, teamsAbbr);
     winsTime = new WinsVis("winsTime", games, teamsAbbr);
     playVis = new PlayVis("playVis", games, teamsAbbr, plays, testPlay);
+    timelineVis = new TimelineVis("timeLine", timelineText, teamsAbbr);
 
     d3.xml("data/images/stadium.svg").then(function (xml) {
         var svg = d3.select(".stadium-graphic").node();
