@@ -56,7 +56,14 @@ function createVis(data) {
     let teamsAbbr = ['LA', 'BUF', 'ATL', 'NO', 'CAR', 'CLE', 'CHI', 'SF', 'CIN', 'PIT', 'DET', 'PHI', 'HOU', 'IND', 'MIA', 'NE', 'NYJ', 'BAL', 'WAS', 'JAX', 'ARI', 'KC', 'LAC', 'LV', 'MIN', 'GB', 'TEN', 'NYG', 'DAL', 'TB', 'SEA', 'DEN']
 
     // Creating positional Game Visualization.
-    let logosVis = new LogosVis("logosVis", games, teamsAbbr);
+    // let logosVis = new LogosVis("logosVis", games, teamsAbbr);
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     // Your code goes here
+    //     let logosVis = new LogosVis("sidenavLeft", games, teamsAbbr.slice(0, 16));
+    // });
+    let logosVisLeft = new LogosVis("sidenavLeft", games, teamsAbbr.slice(0, 16));
+    let logosVisRight = new LogosVis("sidenavRight", games, teamsAbbr.slice(16, 32));
+
     diagramVis = new DiagramVis("diagramVis", games, teamsAbbr);
     winsTime = new WinsVis("winsTime", games, teamsAbbr);
     playVis = new PlayVis("playVis", games, teamsAbbr, plays, testPlay);
@@ -86,4 +93,16 @@ function handleLogoClick(teamAbbr) {
     winsTime.highlightTeam(teamAbbr);
     diagramVis.highlightTeam(teamAbbr);
 
+}
+
+
+/* Set the width of the side navigation to 250px */
+function openNav() {
+    document.getElementById("sidenavLeft").style.width = "150px";
+    // document.getElementById("sidenavRight").style.width = "250px";
+}
+
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+    document.getElementById("sidenavLeft").style.width = "0";
 }

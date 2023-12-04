@@ -12,9 +12,12 @@ class LogosVis {
 
         vis.margin = { top: 40, right: 0, bottom: 60, left: 60 };
 
-        vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
-        vis.height = 300 - vis.margin.top - vis.margin.bottom;
-
+        // vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width;
+        // vis.height = 300 - vis.margin.top - vis.margin.bottom;
+        // vis.width = vis.parentElement.getBoundingClientRect().width
+        vis.width = 100
+        // vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height;
+        vis.height = 1000;
         // SVG drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
             .attr("width", vis.width + vis.margin.left + vis.margin.right)
@@ -28,24 +31,19 @@ class LogosVis {
         let vis = this;
 
         let logoWidth = 50;
-        let logoSpacing = 10;
-        let logosPerRow = Math.ceil(vis.teams.length / 2);
-        let rowHeight = logoWidth + logoSpacing;
+        let sidebarWidth = vis.width;
+        let xPosition = (sidebarWidth - logoWidth) / 2 - 25; // Calculating center position -25 for middle of img
 
         vis.teams.forEach(function(teamAbbr, index) {
-            let rowIndex = Math.floor(index / logosPerRow);
-            let columnIndex = index % logosPerRow;
-
-            let xPosition = columnIndex * (logoWidth + logoSpacing);
-            let yPosition = rowIndex * rowHeight;
+            let yPosition = index * (logoWidth + 10);
 
             // Append a circle for the hover effect
             vis.svg.append("circle")
-                .attr("cx", xPosition)
-                .attr("cy", yPosition)
+                .attr("cx", xPosition + logoWidth / 2)
+                .attr("cy", yPosition + logoWidth / 2)
                 .attr("r", logoWidth / 2)
                 .style("fill", "transparent")
-                .style("cursor", "pointer")
+                .style("cursor", "pointer");
 
             // Append the logo image
             let image = vis.svg.append("image")
@@ -57,11 +55,13 @@ class LogosVis {
 
             // Printing the team abbreviation on click
             image.on("click", function() {
-                console.log(teamAbbr)
+                console.log(teamAbbr);
                 handleLogoClick(teamAbbr);
             });
         });
     }
+
+
 
     wrangleData() {
         let vis = this;
