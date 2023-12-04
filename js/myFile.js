@@ -11,7 +11,6 @@ class WinsVis {
 
     initVis() {
         let vis = this;
-        console.log("creating new vis")
         console.log(vis.data);
 
         vis.margin = {top: 50, right: 50, bottom: 1000, left: 50};
@@ -30,7 +29,6 @@ class WinsVis {
         vis.tooltip = d3.select("body").append("div")
             .attr("class", "tooltip")
             .style("opacity", 0);
-
 
         vis.wrangleData();
     }

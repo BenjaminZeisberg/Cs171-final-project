@@ -48,7 +48,7 @@ function createVis(data) {
     let trackingWeek1 = data[4]
     let timelineText = data[7]
     // console.log(players)
-    // console.log(plays)
+     console.log(plays)
     // console.log(teams)
     // console.log(trackingWeek1)
     // console.log(games)
@@ -68,6 +68,7 @@ function createVis(data) {
     winsTime = new WinsVis("winsTime", games, teamsAbbr);
     playVis = new PlayVis("playVis", games, teamsAbbr, plays, testPlay);
     timelineVis = new TimelineVis("timeLine", timelineText, teamsAbbr);
+    //offensiveVis = new offensiveVis("offensiveVis", timelineText, teamsAbbr);
 
     d3.xml("data/images/stadium.svg").then(function (xml) {
         var svg = d3.select(".stadium-graphic").node();
