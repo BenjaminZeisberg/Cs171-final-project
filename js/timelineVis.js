@@ -80,7 +80,7 @@ class TimelineVis {
         .attr("cx", d => vis.x(d))
         .attr("cy", vis.height / 2)
         .attr("r", 10)
-        .attr("fill", "blue");
+        .attr("fill", '#1B4079');
 
          // Add text label for '1869' at the left edge
         vis.svg.append("text")
@@ -99,12 +99,12 @@ class TimelineVis {
             vis.points.on("click", function(event, d) {
                 // If there is a previously selected circle, reset its color
                 if (vis.selectedCircle) {
-                    vis.selectedCircle.attr("fill", "blue");
+                    vis.selectedCircle.attr("fill", '#1B4079');
                 }
 
                 // Change the color of the newly selected circle and update selectedCircle
                 let currentCircle = d3.select(this);
-                currentCircle.attr("fill", "green");
+                currentCircle.attr("fill", '#828c23');
                 vis.selectedCircle = currentCircle;
 
                 let selectedData = vis.data[d + 1];

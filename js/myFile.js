@@ -11,8 +11,6 @@ class WinsVis {
 
     initVis() {
         let vis = this;
-        console.log("creating new vis")
-        console.log(vis.data);
 
         vis.margin = {top: 50, right: 50, bottom: 1000, left: 50};
 
@@ -71,7 +69,7 @@ class WinsVis {
         vis.updateVis();
     }
 
-    updateVis() {
+    updateVis(teamAbbr) {
         let vis = this;
 
         let dataForChart = [];
@@ -150,19 +148,18 @@ class WinsVis {
                 .style("stroke", "white")
                 .on("mouseover", function (event, d) {
 
+                    // let preHoverStroke = d3.select(this).style("stroke");
+
                     // Style on hover using color scale
                     d3.select(this).style("stroke", colorScale(team));
 
                     // Find closest data point using sep function
-                    let mouseX = d3.pointer(event)[0];
-                    let closestDataPoint = findClosestDataPoint(teamData, xScale.invert(mouseX));
+                    //let mouseX = d3.pointer(event)[0];
+                    //let closestDataPoint = findClosestDataPoint(teamData, xScale.invert(mouseX));
 
-                    // Show tooltip according to closest point, show logos
                     vis.tooltip.html(`
              <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 5px">
                  <strong class="tooltip-title">${team}</strong><br>
-                 Week: ${closestDataPoint.week}<br>
-                 Points: ${closestDataPoint.points}<br>
                  <img src="data/logosWeb/${team}.webp" width="50" height="50" alt="${team} logo">
              </div>`)
                         .style("left", (event.pageX + 10) + "px")
@@ -174,16 +171,64 @@ class WinsVis {
                 .on("mouseout", function () {
 
                     // Reset
-                    d3.select(this).style("stroke", "white");
+                    //d3.select(this).style("stroke", preHoverStroke);
+                    //d3.select(this).style("stroke", "white");
+
+                    if (team === clickedTeam) {
+                        d3.select(this).style("stroke", "red");
+                    }
+                    else {
+                        d3.select(this).style("stroke", "white");
+                    }
+
+
+                    // handleLogoClick(teamAbbr);
+                    //vis.highlightTeam(teamAbbr);
+                    //diagramVis.highlightTeam(teamAbbr);
                     vis.tooltip.transition().duration(200).style("opacity", 0);
+
                 });
         });
 
+
+        vis.svg.selectAll(".circle-game")
+            .data(dataForChart)
+            .enter().append("circle")
+            .attr("cx", d => xScale(d.week))
+            .attr("cy", d => yScale(d.points))
+            .attr("r", 3)
+            .attr("fill", d => colorScale(d.team))
+            .attr("class", "circle-game")
+            .style("opacity", 1)
+            .style("stroke", "white")
+            .on("mouseover", function (event, d) {
+                d3.select(this).style("fill", "white");
+                vis.tooltip.html(`
+             <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 5px">
+                 <strong class="tooltip-title">${d.team}</strong><br>
+                 Week: ${d.week}<br>
+                 Points: ${d.points}<br>
+                 <img src="data/logosWeb/${d.team}.webp" width="50" height="50" alt="${d.team} logo">
+             </div>`)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 10) + "px")
+                    .transition()
+                    .duration(200)
+                    .style("opacity", 0.9);
+            })
+            .on("mouseout", function () {
+                d3.select(this).style("fill", d => colorScale(d.team));
+                vis.tooltip.transition().duration(200).style("opacity", 0);
+            });
+
+
+
+
         // Logic to find the closest data point based on x value (called above)
-        function findClosestDataPoint(data, xValue) {
-            let closest = data.reduce((prev, curr) => Math.abs(curr.week - xValue) < Math.abs(prev.week - xValue) ? curr : prev);
-            return closest;
-        }
+        // function findClosestDataPoint(data, xValue) {
+        //     let closest = data.reduce((prev, curr) => Math.abs(curr.week - xValue) < Math.abs(prev.week - xValue) ? curr : prev);
+        //     return closest;
+        // }
 
         // Line for cumulative chart (and make a new group)
         let cumulativeLine = d3.line()
@@ -219,13 +264,11 @@ class WinsVis {
                     d3.select(this).style("stroke", colorScale(team));
 
                     let mouseX = d3.pointer(event)[0];
-                    let closestDataPoint = findClosestDataPoint(teamData, xScale.invert(mouseX));
+                    //let closestDataPoint = findClosestDataPoint(teamData, xScale.invert(mouseX));
 
                     vis.tooltip.html(`
                  <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 5px">
                      <strong class="tooltip-title">${team}</strong><br>
-                     Week: ${closestDataPoint.week}<br>
-                     Cumulative Points: ${closestDataPoint.cumulative}<br>
                      <img src="data/logosWeb/${team}.webp" width="50" height="50" alt="${team} logo">
                  </div>`)
                         .style("left", (event.pageX + 10) + "px")
@@ -241,6 +284,37 @@ class WinsVis {
                     vis.tooltip.transition().duration(200).style("opacity", 0);
                 });
         });
+
+        cumulativeChartGroup.selectAll(".circle-cumulative")
+            .data(dataForChart)
+            .enter().append("circle")
+            .attr("cx", d => xScale(d.week))
+            .attr("cy", d => cumulativeYScale(d.cumulative))
+            .attr("r", 3)
+            .attr("fill", d => colorScale(d.team))
+            .attr("class", "circle-cumulative")
+            .style("opacity", 1)
+            .style("stroke", "white")
+            .on("mouseover", function (event, d) {
+                d3.select(this).style("fill", "white");
+                vis.tooltip.html(`
+             <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 5px">
+                 <strong class="tooltip-title">${d.team}</strong><br>
+                 Week: ${d.week}<br>
+                 Cumulative Points: ${d.cumulative}<br>
+                 <img src="data/logosWeb/${d.team}.webp" width="50" height="50" alt="${d.team} logo">
+             </div>`)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 10) + "px")
+                    .transition()
+                    .duration(200)
+                    .style("opacity", 0.9);
+            })
+            .on("mouseout", function () {
+                d3.select(this).style("fill", d => colorScale(d.team));
+                vis.tooltip.transition().duration(200).style("opacity", 0);
+            });
+
 
         // Add labels to both charts and their respective axes
         vis.svg.append("text")
@@ -291,7 +365,6 @@ class WinsVis {
 
 
     highlightTeam(teamAbbr) {
-        console.log('fired myFile.js')
         let vis = this;
         let selectedLines = d3.selectAll(".lineGame")
         selectedLines.each(function () {

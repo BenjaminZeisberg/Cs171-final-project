@@ -3,7 +3,7 @@ let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
 // Declaring global variables
-let diagramVis, winsTime, playVis, xScale, selectionDomain, timelineVis;
+let diagramVis, winsTime, playVis, xScale, offensiveVis, selectionDomain, timelineVis, clickedTeam;
 
 window.onload = function () {
     window.scrollTo(0, 0);
@@ -68,6 +68,7 @@ function createVis(data) {
     winsTime = new WinsVis("winsTime", games, teamsAbbr);
     playVis = new PlayVis("playVis", games, teamsAbbr, plays, testPlay);
     timelineVis = new TimelineVis("timeLine", timelineText, teamsAbbr);
+    offensiveVis = new OffensiveVis("offensiveVis", plays, teamsAbbr);
 
     d3.xml("data/images/stadium.svg").then(function (xml) {
         var svg = d3.select(".stadium-graphic").node();
