@@ -111,7 +111,7 @@ function createVis(data) {
             "#7990c5",
             "#6d67a0"]);
 
-    console.log("cols" + colorScale);
+    // console.log("cols" + colorScale);
 
 
     diagramVis = new DiagramVis("diagramVis", games, teamsAbbr);
@@ -172,3 +172,26 @@ function handleUserSelection () {
     }
 
 }
+
+// PlayVisualization
+// Get the button element
+
+let nextFrameButton = document.getElementById("playButton");
+
+// Add event listener
+nextFrameButton.addEventListener("click", function() {
+
+    for (let i = 0; i < 40; i++) {
+        // Update the visualization
+        playVis.updatePlayersPosition(playVis.currentFrame);
+
+        // Next frame to draw
+        playVis.currentFrame++;
+    }
+});
+
+let resetButton = document.getElementById("resetButton");
+
+resetButton.addEventListener("click", function() {
+    playVis.updatePlayersPosition(playVis.currentFrame = 1);
+});

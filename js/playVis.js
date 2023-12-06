@@ -6,6 +6,7 @@ class PlayVis {
         this.play = _plays;
         this.teams = _teamAbbr;
         this.testPlay = _testPlay;
+        this.currentFrame = 1;
         this.initVis();
     }
 
@@ -26,7 +27,7 @@ class PlayVis {
 
         // Numbers are from the standard length of a football field :)
         vis.xScale = d3.scaleLinear()
-            .domain([0, 120]) // 0 to 120 yards
+            .domain([0, 120]) // 0 to 120 yards for x-axis
             .range([0, vis.width]);
 
         vis.yScale = d3.scaleLinear()
@@ -81,16 +82,21 @@ class PlayVis {
                 .text(`${i}`);
         }
 
+
+        console.log(vis.testPlay.find(d => d.frameId === 1 && d.nflId === 35472))
+
         // Draw a circle for each unique ID
         vis.uniqueIds.forEach(nflId => {
             // Find the initial position for each ID
-            let initialPos = vis.testPlay.find(d => d.nflId === nflId);
+            let initialPos = vis.testPlay.find(d => d.nflId === nflId && d.frameId === 1);
+            console.log(initialPos)
             vis.svg.append('circle')
-                .attr('cx', vis.xScale(initialPos.x)) // Use a scale function for x
-                .attr('cy', vis.yScale(initialPos.y)) // Use a scale function for y
+                .attr('cx', vis.xScale(initialPos.x))
+                .attr('cy', vis.yScale(initialPos.y))
                 .attr('r', 5)
-                .attr('fill', nflId === 'football' ? 'brown' : 'red')
+                .attr('fill', nflId === 1 ? 'brown' : 'red')
                 .attr('class', 'player-circle')
+                .attr('id', `player-${nflId}`)
                 .attr('data-nflid', nflId);
         });
     }
@@ -106,7 +112,39 @@ class PlayVis {
             return [team, gameIds];
         });
 
+        vis.testPlay = vis.testPlay.map(d => {
+            return {
+                ...d,
+                frameId: + d.frameId,
+                nflId: + d.nflId,
+            };
+        });
+
         vis.uniqueIds = new Set(vis.testPlay.map(d => d.nflId));
         vis.updateVis();
+    }
+
+    updatePlayersPosition(frameIndex) {
+        let vis = this;
+
+        console.log('updatePlayers pressed')
+        // Assuming each row in your CSV represents a player's position in a single frame
+        let frameData = vis.testPlay.filter(d => d.frameId === frameIndex);
+        console.log(frameData)
+
+        frameData.forEach(playerData => {
+            console.log(`#player-${playerData.nflId}`)
+            // Update each player's position
+            d3.select(`#player-${playerData.nflId}`)
+                .transition()
+                .duration(900)
+                .attr('cx', vis.xScale(playerData.x))
+                .attr('cy', vis.yScale(playerData.y))
+                .attr('r', 5)
+                .attr('fill', playerData.nflId === 1 ? 'brown' : 'red')
+                .attr('class', 'player-circle')
+                .attr('id', `player-${playerData.nflId}`)
+                .attr('data-nflid', playerData.nflId);
+        });
     }
 }
