@@ -3,7 +3,8 @@ let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
 // Declaring global variables
-let diagramVis, winsTime, playVis, xScale, offensiveVis, selectionDomain, timelineVis, clickedTeam;
+let diagramVis, winsTime, playVis, xScale, offensiveVis, selectionDomain, timelineVis, clickedTeam, colorScale;
+
 
 window.onload = function () {
     window.scrollTo(0, 0);
@@ -47,6 +48,7 @@ function createVis(data) {
     let teams = data[3]
     let trackingWeek1 = data[4]
     let timelineText = data[7]
+    let tackles = data[5]
     // console.log(players)
     // console.log(plays)
     // console.log(teams)
@@ -64,11 +66,59 @@ function createVis(data) {
     let logosVisLeft = new LogosVis("sidenavLeft", games, teamsAbbr.slice(0, 16));
     let logosVisRight = new LogosVis("sidenavRight", games, teamsAbbr.slice(16, 32));
 
+
+    // source: https://medialab.github.io/iwanthue/
+    colorScale = d3.scaleOrdinal()
+        .domain(teams)
+        .range(["#e5714f",
+            "#6e60e0",
+            "#e7c83a",
+            "#617ee9",
+            "#e18425",
+            "#b254c9",
+            "#55e09f",
+            "#db53be",
+            "#b59e2e",
+            "#845db9",
+            "#d69b3e",
+            "#5268b7",
+            "#d34228",
+            "#41c4ce",
+            "#d73f50",
+            "#70e1cb",
+            "#da417f",
+            "#3c9976",
+            "#ae4e97",
+            "#b7ab54",
+            "#5b92e0",
+            "#7f7321",
+            "#b58fe0",
+            "#e5cd85",
+            "#236ead",
+            "#ab5f30",
+            "#65c1f0",
+            "#b05054",
+            "#3ba1d2",
+            "#df9e6e",
+            "#35618f",
+            "#96753d",
+            "#a4b5f2",
+            "#e48793",
+            "#2c7ea9",
+            "#e495d1",
+            "#4a73a3",
+            "#a45d82",
+            "#7990c5",
+            "#6d67a0"]);
+
+    console.log("cols" + colorScale);
+
+
     diagramVis = new DiagramVis("diagramVis", games, teamsAbbr);
     winsTime = new WinsVis("winsTime", games, teamsAbbr);
     playVis = new PlayVis("playVis", games, teamsAbbr, plays, testPlay);
     timelineVis = new TimelineVis("timeLine", timelineText, teamsAbbr);
-    offensiveVis = new OffensiveVis("offensiveVis", plays, teamsAbbr);
+    offensiveVis = new OffensiveVis("offensiveVis", plays, tackles, teamsAbbr);
 
     d3.xml("data/images/stadium.svg").then(function (xml) {
         var svg = d3.select(".stadium-graphic").node();
@@ -106,4 +156,19 @@ function openNav() {
 /* Set the width of the side navigation to 0 */
 function closeNav() {
     document.getElementById("sidenavLeft").style.width = "0";
+}
+
+function handleUserSelection () {
+    console.log("handleUserSelection called");
+
+    let selectedData = document.getElementById('statsType').value;
+
+    console.log("Selected Data:", selectedData);
+
+    if (selectedData === "offensive") {
+        offensiveVis.updateVis();
+    } else {
+        offensiveVis.updateDefensiveVisualization();
+    }
+
 }

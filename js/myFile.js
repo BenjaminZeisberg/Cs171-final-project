@@ -132,7 +132,7 @@ class WinsVis {
 
         // Make a line for each team and set color scale
         let teams = Array.from(new Set(dataForChart.map(d => d.team)));
-        let colorScale = d3.scaleOrdinal().domain(teams).range(d3.schemeCategory10);
+        //let colorScale = d3.scaleOrdinal().domain(teams).range(d3.schemeCategory10);
 
         teams.forEach(function (team) {
             let teamData = dataForChart.filter(d => d.team === team);
@@ -280,7 +280,12 @@ class WinsVis {
                 .on("mouseout", function () {
 
                     // Reset and hide again on mouseout
-                    d3.select(this).style("stroke", "white");
+                    if (team === clickedTeam) {
+                        d3.select(this).style("stroke", "red");
+                    }
+                    else {
+                        d3.select(this).style("stroke", "white");
+                    }
                     vis.tooltip.transition().duration(200).style("opacity", 0);
                 });
         });
