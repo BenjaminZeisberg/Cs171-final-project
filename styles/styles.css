@@ -101,7 +101,7 @@ p {
     margin-left: 50px;
 }
 
-.userForm {
+.button-style {
     padding: 8px;
     font-size: 16px;
     border-radius: 4px;
@@ -109,7 +109,7 @@ p {
     color: #333;
 }
 
-.userForm:hover {
+.button-style:hover {
     background-color: #1B4079;
     color: white;
 }
