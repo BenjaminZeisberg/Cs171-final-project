@@ -135,8 +135,11 @@ function createVis(data) {
 
 function handleLogoClick(teamAbbr) {
 
+    // Adjust window pos if above logo element
     let scrollTarget = document.querySelector(".logo-display");
-    if (scrollTarget) {
+
+    if (window.scrollY < scrollTarget.getBoundingClientRect().top) {
+        // If above, scroll to the logo
         scrollTarget.scrollIntoView({ behavior: "smooth" });
     }
 
