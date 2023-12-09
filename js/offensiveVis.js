@@ -135,6 +135,8 @@ class OffensiveVis {
 
         console.log("Defensive Stats Array:", vis.displayDataDefense);
 
+        // ADDED -- to make sure the bubbles aren't flying in from the side
+        vis.updateDefensiveVisualization();
         vis.updateVis();
 
 
