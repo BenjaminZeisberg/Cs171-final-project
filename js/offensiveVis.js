@@ -133,7 +133,9 @@ class OffensiveVis {
             });
         });
 
-        console.log("Defensive Stats Array:", vis.displayDataDefense);
+        storeDefenseData = vis.displayDataDefense;
+        storeOffenseData = vis.displayData;
+
 
         // ADDED -- to make sure the bubbles aren't flying in from the side
         vis.updateDefensiveVisualization();

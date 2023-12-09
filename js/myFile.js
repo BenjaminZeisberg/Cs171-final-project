@@ -386,17 +386,40 @@ class WinsVis {
         });
 
 
+        console.log("DATA");
+        console.log(storeDefenseData);
+        console.log(storeOffenseData);
+
+        // Find the data for the clickedTeam
+        let defenseData = storeDefenseData.find(team => team.team === clickedTeam);
+        let tackleAccuracy = defenseData ? defenseData.tackleAccuracy : 0;
+
+        let offenseData = storeOffenseData.find(team => team.team === clickedTeam);
+        let passingAccuracy = offenseData ? offenseData.passingAccuracy : 0;
 
 
         if (clickedTeam) {
             document.getElementById("cumulativePointsDisplay").innerHTML = `Cumulative Points: ${cumulativePoints}`;
             document.getElementById("cumulativePointsDisplay").style.opacity = 1;
+
             document.getElementById("winCountDisplay").innerHTML = `Games Won: ${winCount}`;
             document.getElementById("winCountDisplay").style.opacity = 1;
+
+            document.getElementById("offenseStats").innerHTML = `Passing Accuracy: ${Math.round(passingAccuracy)}%`;
+            document.getElementById("offenseStats").style.opacity = 1;
+
+            document.getElementById("defenseStats").innerHTML = `Tackle Accuracy: ${Math.round(tackleAccuracy*100)}%`;
+            document.getElementById("defenseStats").style.opacity = 1;
+
             document.getElementById("selectTeamMessage").style.opacity = 0;
         } else {
+            document.getElementById("winCountDisplay").style.opacity = 0;
             document.getElementById("cumulativePointsDisplay").style.opacity = 0;
-            document.getElementById("selectTeamMessage").style.opacity = 0;
+            document.getElementById("offenseStats").style.opacity = 0;
+            document.getElementById("defenseStats").style.opacity = 0;
+
+            document.getElementById("selectTeamMessage").style.opacity = 1;
+
         }
 
         let selectedLines = d3.selectAll(".lineGame")
