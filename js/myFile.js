@@ -62,8 +62,7 @@ class WinsVis {
         });
 
 
-        // Check
-        //console.log("Total Points by Team and Week:", JSON.stringify(pointsByTeamAndWeek, null, 2));
+
         vis.pointsByTeamAndWeek = pointsByTeamAndWeek;
 
         vis.updateVis();
@@ -93,6 +92,10 @@ class WinsVis {
                 dataForChart.push({week, team, points, cumulative: cumulativeData[team]});
             });
         });
+
+        storePoints = dataForChart;
+
+
 
         // Scales, axes
         let yScale = d3.scaleLinear()
@@ -222,13 +225,6 @@ class WinsVis {
             });
 
 
-
-
-        // Logic to find the closest data point based on x value (called above)
-        // function findClosestDataPoint(data, xValue) {
-        //     let closest = data.reduce((prev, curr) => Math.abs(curr.week - xValue) < Math.abs(prev.week - xValue) ? curr : prev);
-        //     return closest;
-        // }
 
         // Line for cumulative chart (and make a new group)
         let cumulativeLine = d3.line()
@@ -371,6 +367,38 @@ class WinsVis {
 
     highlightTeam(teamAbbr) {
         let vis = this;
+
+        // Find cumulative points in w9, if 0 set to w8
+        let weekDataW9 = storePoints.find(d => d.week === 9 && d.team === clickedTeam);
+        let weekDataW8 = storePoints.find(d => d.week === 8 && d.team === clickedTeam);
+        let cumulativePoints = weekDataW9 ? weekDataW9.cumulative : (weekDataW8 ? weekDataW8.cumulative : 0);
+
+
+        // Count wins for display
+        let winCount = 0;
+
+        storeGames.forEach(function (game) {
+            let winner = game.winner;
+
+            if (winner === clickedTeam) {
+                winCount++;
+            }
+        });
+
+
+
+
+        if (clickedTeam) {
+            document.getElementById("cumulativePointsDisplay").innerHTML = `Cumulative Points: ${cumulativePoints}`;
+            document.getElementById("cumulativePointsDisplay").style.opacity = 1;
+            document.getElementById("winCountDisplay").innerHTML = `Games Won: ${winCount}`;
+            document.getElementById("winCountDisplay").style.opacity = 1;
+            document.getElementById("selectTeamMessage").style.opacity = 0;
+        } else {
+            document.getElementById("cumulativePointsDisplay").style.opacity = 0;
+            document.getElementById("selectTeamMessage").style.opacity = 0;
+        }
+
         let selectedLines = d3.selectAll(".lineGame")
         selectedLines.each(function () {
             let line = d3.select(this);
