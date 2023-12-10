@@ -126,6 +126,9 @@
             <div class="container fluid">
                 <h2 data-aos="fade-right">What is their most successful play?</h2>
                 <p>As of now have a static visualization below, but we hope to show a team and their opponents scoring/winning/losing plays. The goal is to either have a play button where given pressed the circles start to move, and then depending on the outcome highlight some things.</p>
+
+<!--                <select id="playsPerGame"></select>-->
+                <div id="teamsVs"></div>
                 <button id="playButton" class="button-style">Play</button>
                 <button id="resetButton" class="button-style">Reset</button>
                 <div id="playVis"></div>
@@ -147,12 +150,8 @@
                         <option value="defensive">Tackle Accuracy</option>
                     </select>
                 </div>
-
             </div>
-
-
         </div>
-
     </div>
 
     <!-- Load JS libraries -->
@@ -183,6 +182,7 @@
     <script src="js/playVis.js"></script>
     <script src="js/timelineVis.js"></script>
     <script src="js/offensiveVis.js"></script>
+    <script src="js/teamsVs.js"></script>
 
 </body>
 </html>

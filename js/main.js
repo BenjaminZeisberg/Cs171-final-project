@@ -3,7 +3,7 @@ let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
 // Declaring global variables
-let diagramVis, winsTime, playVis, xScale, offensiveVis, selectionDomain, timelineVis, clickedTeam, colorScale;
+let diagramVis, winsTime, playVis, xScale, offensiveVis, selectionDomain, timelineVis, clickedTeam, colorScale, teamVs;
 
 
 window.onload = function () {
@@ -119,6 +119,7 @@ function createVis(data) {
     playVis = new PlayVis("playVis", games, teamsAbbr, plays, testPlay);
     timelineVis = new TimelineVis("timeLine", timelineText, teamsAbbr);
     offensiveVis = new OffensiveVis("offensiveVis", plays, tackles, teamsAbbr);
+    teamVs = new TeamsVs('teamsVs', ['LA', 'BUF'])
 
     d3.xml("data/images/stadium.svg").then(function (xml) {
         var svg = d3.select(".stadium-graphic").node();
@@ -146,6 +147,9 @@ function handleLogoClick(teamAbbr) {
     // Highlighting the selected team
     winsTime.highlightTeam(teamAbbr);
     diagramVis.highlightTeam(teamAbbr);
+
+    // on logo click update what teams to display for the play visualization
+    
 
 }
 
