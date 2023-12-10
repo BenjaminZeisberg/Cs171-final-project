@@ -148,6 +148,8 @@ class DiagramVis {
 
                 })
                 .on("mouseout", function() {
+                    vis.tooltip
+                        . style("opacity", 0)
                     let selectedLines = d3.selectAll("." + teamAbbr);
                     selectedLines.each(function() {
                         let line = d3.select(this);

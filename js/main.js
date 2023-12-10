@@ -143,6 +143,8 @@ function handleLogoClick(teamAbbr) {
         scrollTarget.scrollIntoView({ behavior: "smooth" });
     }
 
+    handleUserSelection();
+
     // Highlighting the selected team
     winsTime.highlightTeam(teamAbbr);
     diagramVis.highlightTeam(teamAbbr);

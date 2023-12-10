@@ -180,7 +180,9 @@ class OffensiveVis {
             .attr("cy", d => d.y)
             .attr("r", d => d.size)
             .attr("fill", d => colorScale(d.team))
+            .attr("stroke", d => (d.team === clickedTeam) ? "white" : null)
             .attr("class", "small-circle")
+            .attr("stroke-width", 4)
             .on("mouseover", function (event, d) {
                 // Change circle color to white on mouseover
                 d3.select(this)
@@ -238,8 +240,11 @@ class OffensiveVis {
             .attr("cy", d => d.y)
             .attr("r", d => d.size)
             .attr("fill", d => colorScale(d.team))
+            .attr("stroke", d => (d.team === clickedTeam) ? "white" : null)
             .attr("class", "small-circle")
+            .attr("stroke-width", 4)
             .on("mouseover", function (event, d) {
+
                 // Change circle color to white on mouseover
                 d3.select(this)
                     .attr("fill", "white");
