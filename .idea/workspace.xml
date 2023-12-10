@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc49145e-237f-407e-9d31-11ea097479ab" name="Changes" comment="Working version">
-      <change afterPath="$PROJECT_DIR$/js/teamsVs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
-    </list>
+    <list default="true" id="fc49145e-237f-407e-9d31-11ea097479ab" name="Changes" comment="Working version" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,6 +55,7 @@
       <updated>1701726744020</updated>
       <workItem from="1701726745056" duration="570000" />
       <workItem from="1701727319918" duration="9245000" />
+      <workItem from="1702239915029" duration="302000" />
     </task>
     <task id="LOCAL-00001" summary="Working version">
       <option name="closed" value="true" />
