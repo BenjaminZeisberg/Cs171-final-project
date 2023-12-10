@@ -161,10 +161,10 @@ class WinsVis {
                     //let closestDataPoint = findClosestDataPoint(teamData, xScale.invert(mouseX));
 
                     vis.tooltip.html(`
-             <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 5px">
+             <h4>
                  <strong class="tooltip-title">${team}</strong><br>
                  <img src="data/logosWeb/${team}.webp" width="50" height="50" alt="${team} logo">
-             </div>`)
+             </h4>`)
                         .style("left", (event.pageX + 10) + "px")
                         .style("top", (event.pageY - 10) + "px")
                         .transition()
@@ -207,12 +207,12 @@ class WinsVis {
             .on("mouseover", function (event, d) {
                 d3.select(this).style("fill", "white");
                 vis.tooltip.html(`
-             <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 5px">
+             <h4>
                  <strong class="tooltip-title">${d.team}</strong><br>
                  Week: ${d.week}<br>
                  Points: ${d.points}<br>
                  <img src="data/logosWeb/${d.team}.webp" width="50" height="50" alt="${d.team} logo">
-             </div>`)
+             </h4>`)
                     .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 10) + "px")
                     .transition()
@@ -263,10 +263,10 @@ class WinsVis {
                     //let closestDataPoint = findClosestDataPoint(teamData, xScale.invert(mouseX));
 
                     vis.tooltip.html(`
-                 <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 5px">
+                 <h4>
                      <strong class="tooltip-title">${team}</strong><br>
                      <img src="data/logosWeb/${team}.webp" width="50" height="50" alt="${team} logo">
-                 </div>`)
+                 </h4>`)
                         .style("left", (event.pageX + 10) + "px")
                         .style("top", (event.pageY - 10) + "px")
                         .transition()
@@ -299,12 +299,13 @@ class WinsVis {
             .on("mouseover", function (event, d) {
                 d3.select(this).style("fill", "white");
                 vis.tooltip.html(`
-             <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 5px">
-                 <strong class="tooltip-title">${d.team}</strong><br>
+             
+             <h4>
+             <strong>${d.team}</strong><br>
                  Week: ${d.week}<br>
                  Cumulative Points: ${d.cumulative}<br>
                  <img src="data/logosWeb/${d.team}.webp" width="50" height="50" alt="${d.team} logo">
-             </div>`)
+             </h4>`)
                     .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 10) + "px")
                     .transition()

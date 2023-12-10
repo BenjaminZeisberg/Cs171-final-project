@@ -79,8 +79,9 @@ class SuperVis {
             .attr("y", d => vis.y(d.wins))
             .attr("width", vis.x.bandwidth())
             .attr("height", d => vis.height - vis.y(d.wins))
+            .attr("fill", d => colorScale(d.team))
             .on("mouseover", function(event, d) {
-                d3.select(this).style("fill", "orange"); // Change color on hover
+                d3.select(this).style("fill", "white"); // Change color on hover
             })
             .on("mouseout", function(event, d) {
                 d3.select(this).style("fill", ""); // Revert to original color on mouseout

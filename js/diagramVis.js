@@ -110,17 +110,17 @@ class DiagramVis {
 
                     // Set tooltip content
                     vis.tooltip.html(`
-                         <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 5px, text-anchor: center;">
+                         <h4>
                              <strong class="tooltip-title">${teamAbbr}</strong><br>
                                  <table class="tooltip-table">
                                  <tr>
                                         <td>Wins</td>
                                  </tr>
                                  <tr>
-                                    <td>We will display the statistics for that team here</td>
+                                    <td>Insert Statistics</td>
                                  </tr>
                                  </table>
-                         </div>`);
+                         </h4>`);
 
                     // Calculate tooltip dimensions
                     let tooltipRect = vis.tooltip.node().getBoundingClientRect();
