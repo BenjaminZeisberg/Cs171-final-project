@@ -148,6 +148,8 @@ class DiagramVis {
 
                 })
                 .on("mouseout", function() {
+                    vis.tooltip
+                        . style("opacity", 0)
                     let selectedLines = d3.selectAll("." + teamAbbr);
                     selectedLines.each(function() {
                         let line = d3.select(this);
@@ -177,7 +179,6 @@ class DiagramVis {
                 let game = vis.data.find(g => (g.homeTeamAbbr === teamAbbr || g.visitorTeamAbbr === teamAbbr) &&
                     (g.homeTeamAbbr === otherTeamAbbr || g.visitorTeamAbbr === otherTeamAbbr));
 
-                console.log(game)
                 // Check if teamAbbr is the winner or loser and change line color
                 if (game.winner === teamAbbr) {
                     line.style("stroke", "#7dff13");
@@ -211,6 +212,9 @@ class DiagramVis {
                 game.loser = 'Tie';
             }
         });
+
+        storeGames = vis.data;
+
         vis.updateVis();
     }
 }

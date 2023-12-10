@@ -3,7 +3,8 @@ let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
 // Declaring global variables
-let diagramVis, winsTime, playVis, xScale, offensiveVis, selectionDomain, timelineVis, clickedTeam, colorScale, teamVs;
+let diagramVis, winsTime, playVis, xScale, offensiveVis, selectionDomain, timelineVis, clickedTeam, colorScale, storePoints, storeGames, storeDefenseData, storeOffenseData;
+>>>>>>> 80c986d5c1230bc8ce0aa0fc8912a3a4db40b1ca
 
 
 window.onload = function () {
@@ -143,6 +144,8 @@ function handleLogoClick(teamAbbr) {
         // If above, scroll to the logo
         scrollTarget.scrollIntoView({ behavior: "smooth" });
     }
+
+    handleUserSelection();
 
     // Highlighting the selected team
     winsTime.highlightTeam(teamAbbr);
