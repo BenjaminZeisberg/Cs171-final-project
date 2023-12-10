@@ -3,8 +3,7 @@ let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
 // Declaring global variables
-let diagramVis, winsTime, playVis, xScale, offensiveVis, selectionDomain, timelineVis, clickedTeam, colorScale, storePoints, storeGames, storeDefenseData, storeOffenseData;
->>>>>>> 80c986d5c1230bc8ce0aa0fc8912a3a4db40b1ca
+let diagramVis, winsTime, playVis, xScale, offensiveVis, selectionDomain, timelineVis, clickedTeam, colorScale, storePoints, storeGames, storeDefenseData, storeOffenseData, teamVs;
 
 
 window.onload = function () {
@@ -27,7 +26,8 @@ let promises = [
     d3.csv("data/players.csv"),
     d3.csv("data/tackles.csv"),
     d3.csv('data/tracking_week_1.csv'),
-    d3.csv('data/timeline-text.csv')
+    d3.csv('data/timeline-text.csv'),
+    d3.csv("data/superbowl.csv")
 ];
 
 
@@ -50,6 +50,7 @@ function createVis(data) {
     let trackingWeek1 = data[4]
     let timelineText = data[7]
     let tackles = data[5]
+    let superbowlWin = data[8]
     // console.log(players)
     // console.log(plays)
     // console.log(teams)
@@ -120,6 +121,7 @@ function createVis(data) {
     playVis = new PlayVis("playVis", games, teamsAbbr, plays, testPlay);
     timelineVis = new TimelineVis("timeLine", timelineText, teamsAbbr);
     offensiveVis = new OffensiveVis("offensiveVis", plays, tackles, teamsAbbr);
+    superVis = new SuperVis("superBowl", superbowlWin, teamsAbbr);
     teamVs = new TeamsVs('teamsVs', ['LA', 'BUF'])
 
     d3.xml("data/images/stadium.svg").then(function (xml) {
