@@ -3,8 +3,11 @@ let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
 // Declaring global variables
-let diagramVis, winsTime, playVis, xScale, offensiveVis, selectionDomain, timelineVis, clickedTeam, colorScale, storePoints, storeGames, storeDefenseData, storeOffenseData, teamVs;
+let diagramVis, winsTime, playVis, xScale, offensiveVis, selectionDomain, timelineVis, clickedTeam, colorScale, storePoints, storeGames, storeDefenseData, storeOffenseData, teamVs, lastLogo;
 
+// declaring data variables as global for later
+
+let games, plays, trackingWeek1
 
 window.onload = function () {
     window.scrollTo(0, 0);
@@ -42,12 +45,12 @@ Promise.all(promises)
 // Creating the Vis
 function createVis(data) {
 
-    let games = data[0]
-    let plays = data[1]
+    games = data[0]
+    plays = data[1]
     let testPlay = data[2]
     let players = data[2]
     let teams = data[3]
-    let trackingWeek1 = data[4]
+    trackingWeek1 = data[4]
     let timelineText = data[7]
     let tackles = data[5]
     let superbowlWin = data[8]
@@ -122,7 +125,7 @@ function createVis(data) {
     timelineVis = new TimelineVis("timeLine", timelineText, teamsAbbr);
     offensiveVis = new OffensiveVis("offensiveVis", plays, tackles, teamsAbbr);
     superVis = new SuperVis("superBowl", superbowlWin, teamsAbbr);
-    teamVs = new TeamsVs('teamsVs', ['LA', 'BUF'])
+    teamVs = new TeamsVs('teamVs', ['LA', 'BUF'])
 
     d3.xml("data/images/stadium.svg").then(function (xml) {
         var svg = d3.select(".stadium-graphic").node();
@@ -137,6 +140,8 @@ function createVis(data) {
     document.body.classList.add('loaded');
 }
 
+// to begin with lastLogo is 'LA'
+lastLogo = 'LA'
 function handleLogoClick(teamAbbr) {
 
     // Adjust window pos if above logo element
@@ -154,8 +159,21 @@ function handleLogoClick(teamAbbr) {
     diagramVis.highlightTeam(teamAbbr);
 
     // on logo click update what teams to display for the play visualization
-    
+    teamVs.updateTeams([lastLogo, teamAbbr])
 
+    // the last clicked team will become the other team
+    lastLogo = teamAbbr
+
+    // on the selection of two teams send to wrangle data to find all plays for that game
+
+    // first find game ID
+
+    let filteredGames = games.filter(game =>
+        (game.homeTeamAbbr === 'LA' && game.visitorTeamAbbr === 'BUF') ||
+        (game.homeTeamAbbr === 'BUF' && game.visitorTeamAbbr === 'LA')
+    );
+
+    console.log(filteredGames);
 }
 
 

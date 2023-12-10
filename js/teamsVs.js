@@ -26,7 +26,8 @@ class TeamsVs {
     wrangleData() {
         let vis = this;
 
-        // Assuming the logos are named as the team abbreviations
+        vis.svg.selectAll("*").remove();
+
         vis.displayLogos();
     }
 
@@ -49,5 +50,15 @@ class TeamsVs {
             .text("VS")
             .attr("font-size", "24px")
             .attr("text-anchor", "middle");
+    }
+
+    updateTeams(newTeams) {
+        let vis = this;
+
+        // Update the teams array
+        vis.teams = newTeams;
+
+        // update logos to display
+        vis.wrangleData();
     }
 }
