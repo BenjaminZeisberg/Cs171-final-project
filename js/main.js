@@ -64,7 +64,7 @@ function createVis(data) {
     let teams = data[3]
     // trackingWeek1 = data[6]
     let timelineText = data[7]
-    let tackles = data[5]
+    let tackles = data[6]
     let superbowlWin = data[8]
     // trackingWeek2 = data
 
