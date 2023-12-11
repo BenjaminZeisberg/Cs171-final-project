@@ -112,14 +112,6 @@ class DiagramVis {
                     vis.tooltip.html(`
                          <h4>
                              <strong class="tooltip-title">${teamAbbr}</strong><br>
-                                 <table class="tooltip-table">
-                                 <tr>
-                                        <td>Wins</td>
-                                 </tr>
-                                 <tr>
-                                    <td>Insert Statistics</td>
-                                 </tr>
-                                 </table>
                          </h4>`);
 
                     // Calculate tooltip dimensions
