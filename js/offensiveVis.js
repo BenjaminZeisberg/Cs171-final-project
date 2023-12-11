@@ -13,7 +13,7 @@ class OffensiveVis {
     initVis() {
         let vis = this;
 
-        vis.margin = {top: 150, right: 50, bottom: 200, left: 0};
+        vis.margin = {top: 150, right: 50, bottom: 200, left: -50};
 
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
 
@@ -41,6 +41,41 @@ class OffensiveVis {
 
     wrangleData() {
         let vis = this;
+
+        const teamRegionMapping = {
+            'LA': 'West',
+            'NYG': 'East',
+            'CAR': 'South',
+            'PHI': 'East',
+            'WAS': 'East',
+            'BUF': 'East',
+            'SEA': 'West',
+            'SF': 'West',
+            'ATL': 'South',
+            'NO': 'South',
+            'PIT': 'North',
+            'NYJ': 'East',
+            'HOU': 'South',
+            'ARI': 'West',
+            'GB': 'North',
+            'CLE': 'North',
+            'CHI': 'North',
+            'LV': 'West',
+            'MIA': 'East',
+            'CIN': 'North',
+            'TB': 'South',
+            'IND': 'South',
+            'BAL': 'North',
+            'MIN': 'North',
+            'LAC': 'West',
+            'DAL': 'East',
+            'TEN': 'South',
+            'DET': 'North',
+            'JAX': 'South',
+            'KC': 'West',
+            'NE': 'East',
+            'DEN': 'West',
+        };
 
         vis.displayData = [];
 
@@ -71,13 +106,17 @@ class OffensiveVis {
         teamDataMap.forEach((teamData, possessionTeam) => {
             let passingAccuracy = teamData.completedPasses / teamData.allPasses;
 
+            let region = teamRegionMapping[possessionTeam];
+
+
             // Push a single entry for the team into displayData
             vis.displayData.push({
                 name: possessionTeam,
                 group: "Team",
                 team: possessionTeam,
                 passingAccuracy: passingAccuracy * 100,
-                size: passingAccuracy * 85,
+                size: passingAccuracy * 70,
+                region: region,
             });
         });
 
@@ -92,6 +131,8 @@ class OffensiveVis {
 
         let teamTackleMap = new Map();
 
+        let defensiveTeam;
+
 // Iterate through tacklesData to cross-reference play IDs
         vis.tackles.forEach((tackle) => {
             let playId = tackle.playId;
@@ -100,7 +141,7 @@ class OffensiveVis {
             let play = vis.data.find((play) => play.playId === playId);
 
             if (play) {
-                let defensiveTeam = play.defensiveTeam;
+                defensiveTeam = play.defensiveTeam;
 
                 // Initialize teamTackleData if it doesn't exist in the map
                 if (!teamTackleMap.has(defensiveTeam)) {
@@ -123,18 +164,23 @@ class OffensiveVis {
         teamTackleMap.forEach((teamTackleData, team) => {
             let tackleAccuracy = teamTackleData.totalTackles / ( teamTackleData.totalTackles + teamTackleData.totalMissedTackles);
 
+            let region = teamRegionMapping[team];
+
             // Push a single entry for the team into displayData
             vis.displayDataDefense.push({
                 name: team,
                 group: "Team",
                 team: team,
                 tackleAccuracy : tackleAccuracy,
-                size: (tackleAccuracy - 0.5) * 120,
+                size: (tackleAccuracy - 0.5) * 100,
+                region: region,
             });
         });
 
         storeDefenseData = vis.displayDataDefense;
         storeOffenseData = vis.displayData;
+
+        console.log(vis.displayDataDefense);
 
 
         // ADDED -- to make sure the bubbles aren't flying in from the side
@@ -153,14 +199,6 @@ class OffensiveVis {
         vis.svg.selectAll(".small-circle").remove();
 
         let teams = Array.from(new Set(vis.data.map(d => d.team)));
-        //let colorScale = d3.scaleOrdinal().domain(teams).range(d3.schemeCategory10);
-
-        //console.log(colorScale);
-
-        console.log("todisp");
-        console.log(vis.displayData);
-
-        vis.svg.selectAll(".small-circle").remove();
 
         // Apply force simulation to bring small circles together
         vis.simulation = d3.forceSimulation(vis.displayData)
@@ -197,20 +235,52 @@ class OffensiveVis {
                     .style("top", (event.pageY - 100) + "px");
             })
             .on("mouseout", function (d) {
-
                 d3.select(this)
                     .attr("fill", d => colorScale(d.team));
-
 
                 vis.tooltip.transition()
                     .duration(500)
                     .style("opacity", 0);
             });
 
+        function updateSimulationForRegion(region) {
+            // Define the forceX for each region
+            let forceXRegion = d3.forceX(function (d) {
+                switch (d.region) {
+                    case 'South':
+                        return (vis.width / 4) - 50;
+                    case 'North':
+                        return (vis.width / 4 * 2 ) - 50;
+                    case 'East':
+                        return (vis.width / 4 * 3) - 50;
+                    case 'West':
+                        return (vis.width / 4 * 4) - 50;
+                }
+            }).strength(0.5);
+
+            vis.simulation
+                .force('x', forceXRegion)
+                .alphaTarget(0.05)
+                .restart();
+        }
+
+        d3.select('#regionButton').on('click', function () {
+            updateSimulationForRegion();
+        });
+
+        d3.select('#combineButton').on('click', function () {
+            vis.simulation
+                .force('x', d3.forceX(vis.width / 2).strength(0.1))
+                .force('y', d3.forceY(vis.height / 2).strength(0.1))
+                .alphaTarget(0.01)
+                .restart();
+        });
+
         vis.simulation.nodes(vis.displayData);
         vis.simulation.alpha(0.5).restart();
-
     }
+
+
 
     updateDefensiveVisualization() {
         let vis = this;
