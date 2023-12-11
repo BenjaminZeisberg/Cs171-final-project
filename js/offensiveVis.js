@@ -13,7 +13,7 @@ class OffensiveVis {
     initVis() {
         let vis = this;
 
-        vis.margin = {top: 150, right: 50, bottom: 200, left: -50};
+        vis.margin = {top: 130, right: 50, bottom: 200, left: -50};
 
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
 

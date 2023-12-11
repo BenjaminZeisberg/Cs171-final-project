@@ -94,7 +94,7 @@ class PlayVis {
                 .attr('cx', vis.xScale(initialPos.x))
                 .attr('cy', vis.yScale(initialPos.y))
                 .attr('r', 5)
-                .attr('fill', nflId === 1 ? 'brown' : 'red')
+                .attr('fill', nflId === 1 ? 'saddlebrown' : '#e3453f')
                 .attr('class', 'player-circle')
                 .attr('id', `player-${nflId}`)
                 .attr('data-nflid', nflId);
@@ -141,7 +141,7 @@ class PlayVis {
                 .attr('cx', vis.xScale(playerData.x))
                 .attr('cy', vis.yScale(playerData.y))
                 .attr('r', 5)
-                .attr('fill', playerData.nflId === 1 ? 'brown' : 'red')
+                .attr('fill', playerData.nflId === 1 ? 'saddlebrown' : '#e3453f')
                 .attr('class', 'player-circle')
                 .attr('id', `player-${playerData.nflId}`)
                 .attr('data-nflid', playerData.nflId);

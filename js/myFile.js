@@ -12,7 +12,7 @@ class WinsVis {
     initVis() {
         let vis = this;
 
-        vis.margin = {top: 50, right: 50, bottom: 1000, left: 50};
+        vis.margin = {top: 50, right: 50, bottom: 900, left: 50};
 
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
 

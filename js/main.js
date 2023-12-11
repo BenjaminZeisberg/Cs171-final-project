@@ -206,7 +206,7 @@ function closeNavRight() {
 
 // Use this to call either offensive or defensive view
 function handleUserSelection () {
-    console.log("handleUserSelection called");
+    fadeOutRegion();
 
     let selectedData = document.getElementById('statsType').value;
 
@@ -275,4 +275,35 @@ function titleStyle() {
         .style("top", "50%")
         .style("transform", "translate(-50%, -50%)")
         .style("opacity", "85%");
+}
+
+function fadeInRegion() {
+    var regionRow = document.getElementById('regionRow');
+
+    // Gradually increase opacity
+    var opacity = 0;
+    var interval = setInterval(function () {
+        opacity += 0.05;
+        regionRow.style.opacity = opacity;
+
+        if (opacity >= 1) {
+            clearInterval(interval);
+        }
+    }, 50);
+}
+
+function fadeOutRegion() {
+    var regionRow = document.getElementById('regionRow');
+
+    if (getComputedStyle(regionRow).opacity > '0') {
+        var opacity = getComputedStyle(regionRow).opacity;
+        var interval = setInterval(function () {
+            opacity -= 0.05;
+            regionRow.style.opacity = opacity;
+
+            if (opacity <= 0) {
+                clearInterval(interval);
+            }
+        }, 50);
+    }
 }

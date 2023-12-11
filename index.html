@@ -172,22 +172,49 @@
         </div>
 
 
-<div class="section" id="section4" >
+<div class="section" id="section4" style="padding-bottom: 300px;" >
     <div class="container fluid">
         <div class="row row-padded">
         <h2 data-aos="fade-right">How many points has your team scored? </h2>
-        <p data-aos="fade-up">Here we display the wins over time. You can hover over each line to see how many points a given team has made until that week of games.</p>
+        <p data-aos="fade-up">These graphs display the points scored by each team for every week of the 2023 season, as well as their cumulative points at each stage. Hover over the circles for more detailed information. How did your team fare compared to others? </p>
         <div id="winsTime"></div>
+            <h5 data-aos="zoom-in-down"
+                data-aos-easing="ease-in-back"
+                data-aos-duration="1500" data-aos-delay="100" style="padding-top: 100px;">The <span style="color: #e3453f;">Kansas City Chiefs</span> collected the highest number of points at <span style="color: #e3453f;">243</span>, followed by the Seattle Seahawks at 241 and the Baltimore Ravens at 235. </h5>
+            <h5 data-aos="zoom-in-down"
+                data-aos-easing="ease-in-back"
+                data-aos-duration="1500" data-aos-delay="300" style="padding-top: 100px;"> But do points scored actually translate to wins? </h5>
+            <h5 data-aos="zoom-in-down"
+                data-aos-easing="ease-in-back"
+                data-aos-duration="1500" data-aos-delay="500" style="padding-top: 100px;">
+                Fox Sports puts the Chief's Super Bowl odds at +750, translating to only an <span style="color: #e3453f;">11.8% chance</span> of being Super Bowl champs.
+            </h5>
+            <h5 data-aos="zoom-in-down"
+                data-aos-easing="ease-in-back"
+                data-aos-duration="1500" data-aos-delay="500" style="text-align: right; padding-top: 150px;">
+                Perhaps thinking about it in terms of game outcomes will make this more tangible.
+            </h5>
         </div>
     </div>
 </div>
 
-<div class="section" id="section5">
+<div class="section" id="section5" style="padding-bottom: 300px;">
     <div class="container fluid">
         <div class="row row-padded">
             <h2 data-aos="fade-right">How many games have they won?</h2>
-            <p data-aos="fade-up">Here you can see all teams at once. When hovering over a team logo you can see how they played, and red indicates that they lost to the other team, and green means they won. The Eagles have won all of their games so far! Who knows maybe they'll make it to the superbowl again!</p>
+            <p data-aos="fade-up">Here you can see all teams at once. When hovering over a team logo you can see how they played, and red indicates that they lost to the other team, and green means they won. The Eagles have won all of their games so far... maybe they'll make it to the superbowl again!</p>
             <div id="diagramVis" class="scroll-threshold"></div>
+            <h5 data-aos="zoom-in-down"
+                data-aos-easing="ease-in-back"
+                data-aos-duration="1500" data-aos-delay="100" style="padding-top: 100px;">It seems the <span style="color: #e3453f;">Philadelphia Eagles</span> and the <span style="color: #e3453f;">New York Giants</span> actually came out on top here, both winning all of their games so far. </h5>
+
+            <h5 data-aos="zoom-in-down"
+                data-aos-easing="ease-in-back"
+                data-aos-duration="1500" data-aos-delay="300" style="padding-top: 100px;">Games are all made up of a series of plays, each of which makes an intentional and telling contribution to the team's strategy. </h5>
+
+            <h5 data-aos="zoom-in-down"
+                data-aos-easing="ease-in-back"
+                data-aos-duration="1500" data-aos-delay="500" style="padding-top: 100px;">Let's take a closer look at some plays next. </h5>
 
         </div>
     </div>
@@ -210,6 +237,24 @@
         </div>
 
         <div id="playVis"></div>
+
+        <h5 data-aos="zoom-in-down"
+            data-aos-easing="ease-in-back"
+            data-aos-duration="1500" data-aos-delay="100" style="padding-top: 100px;">Now that we've seen exactly how plays work on the field, let's start to think about what factors drive <span style="color: #e3453f;">positive outcomes</span> at the play level. </h5>
+
+        <h5 data-aos="zoom-in-down"
+            data-aos-easing="ease-in-back"
+            data-aos-duration="1500" data-aos-delay="300" style="padding-top: 100px;">We can break this down by thinking about plays in the context of offensive and defensive performance.  </h5>
+
+
+        <h5 data-aos="zoom-in-down"
+            data-aos-easing="ease-in-back"
+            data-aos-duration="1500" data-aos-delay="500" style="padding-top: 100px;">One of the hallmark indicators of a positive offensive play is high quality ball handling. Did the team execute when needed? Or did they crack under pressure? Thus <span style="color: #e3453f;">passing accuracy</span> is a play-level metric that is imperative to consider when trying to distinguish between successful teams on offense and unsuccessful ones. </h5>
+
+        <h5 data-aos="zoom-in-down"
+            data-aos-easing="ease-in-back"
+            data-aos-duration="1500" data-aos-delay="700" style="padding-top: 100px;">Next, applying a defensive perspective, arguably the most important consideration to make is whether tackles are being made when they need to be. This is the main tool to stop a strong offense, after all. Are players on a given team making their tackles? We can look at a team's <span style="color: #e3453f;">tackle accuracy</span> to examine this. </h5>
+
     </div>
 </div>
 
@@ -222,18 +267,61 @@
         </div>
         <div class="row">
             <div class="col-9">
-                <div id="offensiveVis" ></div>
+                <div class="row" id="regionRow" style="text-align: center; opacity: 0;">
+                    <div class="col-3">
+                        <h5>
+                            South
+                        </h5>
+                    </div>
+                    <div class="col-3">
+                        <h5>
+                            North
+                        </h5>
+                    </div>
+                    <div class="col-3">
+                        <h5>
+                            East
+                        </h5>
+                    </div>
+                    <div class="col-3">
+                        <h5>
+                            West
+                        </h5>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div id="offensiveVis" ></div>
+                </div>
+
+
             </div>
-            <div class="col-3">
+            <div class="col-3" style="padding-top: 30px;">
                 <select id="statsType" class="button-style" onchange="handleUserSelection()">
                     <option value="offensive">Passing Accuracy</option>
                     <option value="defensive">Tackle Accuracy</option>
                 </select><br><br>
-                <button id="regionButton" class="button-style">Split by Region</button><br><br>
-                <button id="combineButton" class="button-style">Combine</button>
+                <button id="regionButton" class="button-style" onclick="fadeInRegion()">Split by Region</button><br><br>
+                <button id="combineButton" class="button-style" onclick="fadeOutRegion()">Combine</button>
             </div>
 
         </div>
+
+
+        <h5 data-aos="zoom-in-down"
+            data-aos-easing="ease-in-back"
+            data-aos-duration="1500" data-aos-delay="100" style="padding-top: 100px;">The <span style="color: #e3453f;">Tampa Bay Buccaneers</span> exhibited the highest passing accuracy at <span style="color: #e3453f;">59%</span>, while the <span style="color: #e3453f;">Indianapolis Colts</span> and the <span style="color: #e3453f;">New England Patriots</span> displayed the highest tackle accuracy both at <span style="color: #e3453f;">89%</span>. </h5>
+
+        <h5 data-aos="zoom-in-down"
+            data-aos-easing="ease-in-back"
+            data-aos-duration="1500" data-aos-delay="300" style="padding-top: 100px;">Filtering by region reveals that the <span style="color: #e3453f;">West</span> teams appear to have higher levels of completed passes, while the <span style="color: #e3453f;">North</span> teams seem to convey higher tackle accuracy. </h5>
+
+
+
+        <h5 data-aos="zoom-in-down"
+            data-aos-easing="ease-in-back"
+            data-aos-duration="1500" data-aos-delay="500" style="padding-top: 100px;">Let's turn to some historical Super Bowl data to tie this all together. </h5>
+
 
     </div>
     </div>
@@ -254,6 +342,19 @@
         <div class="col-12" id="superBowl"></div>
     </div>
 </div>
+        <h5 data-aos="zoom-in-down"
+            data-aos-easing="ease-in-back"
+            data-aos-duration="1500" data-aos-delay="100" style="padding-top: 100px;">The <span style="color: #e3453f;">New England Patriots</span> and the <span style="color: #e3453f;">Pittsburgh Steelers</span> both cinch the top spot with  <span style="color: #e3453f;">6</span> prior Super Bowl wins. </h5>
+
+
+        <h5 data-aos="zoom-in-down"
+            data-aos-easing="ease-in-back"
+            data-aos-duration="1500" data-aos-delay="300" style="padding-top: 100px;">With the <span style="color: #e3453f;">New England Patriots</span> maintaining both the tied highest tackle accuracy at <span style="color: #e3453f;">89%</span> and number of prior Super Bowl wins at <span style="color: #e3453f;">6</span>, we find they are well positioned for next year's Super Bowl. Provided they bring their passing accuracy up from where it currently stands at <span style="color: #e3453f;">44%</span>, we expect there to be a high likelihood that they emerge victorious. </h5>
+
+        <h5 data-aos="zoom-in-down"
+            data-aos-easing="ease-in-back"
+            data-aos-duration="1500" data-aos-delay="300" style="padding-top: 100px;"> Scroll down to see overall statistics. How did your team do? How has their current season compared to the Patriots? </h5>
+
     </div>
 </div>
 
@@ -315,6 +416,7 @@
             https://www.nfl.com/standings/ <br>
             https://www.kaggle.com/competitions/nfl-big-data-bowl-2024/data?select=games.csv <br>
             https://www.ballstatedaily.com/article/2022/08/a-brief-history-of-the-super-bowl?ct=content_open&cv=cbox_latest <br>
+            https://www.foxsports.com/articles/nfl/2023-24-kansas-city-chiefs-odds-odds-to-win-super-bowl-nfl-playoffs-division <br>
         </p>
     </div>
 
