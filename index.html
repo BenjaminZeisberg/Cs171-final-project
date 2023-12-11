@@ -115,14 +115,36 @@
 
 
 <div class="section" id="section4">
-    <div class="container fluid">
+    <div class="container-fluid">
         <h2 data-aos="fade-right">What is their most successful play?</h2>
-        <div class='row'>
-            <div id="teamVs"></div>
+
+        <!-- Logos Row -->
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <div id="teamVs"></div>
+            </div>
         </div>
+
+        <!-- Select Buttons Row -->
         <div class="row">
-        <button id="playButton" class="button-style">Play</button>
-        <button id="resetButton" class="button-style">Reset</button>
+            <div class="col-6">
+                <select class="form-select" id="selectOne">
+                    <option value="">Possession </option>
+                </select>
+            </div>
+            <div class="col-6">
+                <select class="form-select" id="selectTwo">
+                    <option value="">Possession other team</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Play and Reset Buttons Row -->
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <button id="playButton" class="button-style">Play</button>
+                <button id="resetButton" class="button-style">Reset</button>
+            </div>
         </div>
 
         <div id="playVis"></div>

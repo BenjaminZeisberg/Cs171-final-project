@@ -83,8 +83,6 @@ class PlayVis {
         }
 
 
-        console.log(vis.testPlay.find(d => d.frameId === 1 && d.nflId === 35472))
-
         // Draw a circle for each unique ID
         vis.uniqueIds.forEach(nflId => {
             // Find the initial position for each ID
@@ -97,7 +95,20 @@ class PlayVis {
                 .attr('fill', nflId === 1 ? 'brown' : 'red')
                 .attr('class', 'player-circle')
                 .attr('id', `player-${nflId}`)
+                .attr('dy', ".35em")  // Vertically center text
+                .attr('text-anchor', 'middle')  // Center text horizontally
+                .text(nflId.jerseyNumber)
                 .attr('data-nflid', nflId);
+                //
+                // let jerseyNumber = initialPos.jerseyNumber; // Replace with the actual property if different
+                // vis.svg.append('text')
+                //     .attr('x', vis.xScale(initialPos.x))
+                //     .attr('y', vis.yScale(initialPos.y))
+                //     .attr('dy', ".35em") // This adjusts the position to vertically align the text
+                //     .attr('text-anchor', 'middle') // This centers the text horizontally on the x coordinate
+                //     .text(jerseyNumber) // Set the text to the jersey number
+                //     .attr('class', 'jersey-text')
+                //     .attr('id', `jersey-${nflId}`);
         });
     }
 
@@ -115,8 +126,8 @@ class PlayVis {
         vis.testPlay = vis.testPlay.map(d => {
             return {
                 ...d,
-                frameId: + d.frameId,
-                nflId: + d.nflId,
+                frameId: +d.frameId,
+                nflId: +d.nflId,
             };
         });
 
@@ -127,13 +138,22 @@ class PlayVis {
     updatePlayersPosition(frameIndex) {
         let vis = this;
 
-        console.log('updatePlayers pressed')
         // Assuming each row in your CSV represents a player's position in a single frame
         let frameData = vis.testPlay.filter(d => d.frameId === frameIndex);
-        console.log(frameData)
+
+        let clubs = [...new Set(frameData.map(d => d.club))];
 
         frameData.forEach(playerData => {
-            console.log(`#player-${playerData.nflId}`)
+            // Change color based on first or second club
+            let color;
+            if (clubs[0] === playerData.club) {
+                color = 'blue';
+            } else if (clubs[1] === playerData.club) {
+                color = 'orange';
+            } else {
+                color = 'grey';
+            }
+
             // Update each player's position
             d3.select(`#player-${playerData.nflId}`)
                 .transition()
@@ -141,10 +161,22 @@ class PlayVis {
                 .attr('cx', vis.xScale(playerData.x))
                 .attr('cy', vis.yScale(playerData.y))
                 .attr('r', 5)
-                .attr('fill', playerData.nflId === 1 ? 'brown' : 'red')
+                .attr('fill', color) // Use the determined color
                 .attr('class', 'player-circle')
                 .attr('id', `player-${playerData.nflId}`)
                 .attr('data-nflid', playerData.nflId);
         });
     }
+
+    updateVisualization(playData) {
+        let vis = this;
+
+        // Clear existing SVG elements
+        vis.svg.selectAll("*").remove();
+
+        // Process new data or filter existing data based on the selected play
+        // For example, if 'selectedPlay' is an ID, filter 'vis.testPlay' to get relevant data
+        vis.testPlay = playData;
+        vis.wrangleData()
+    };
 }

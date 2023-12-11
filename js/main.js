@@ -7,7 +7,7 @@ let diagramVis, winsTime, playVis, xScale, offensiveVis, selectionDomain, timeli
 
 // declaring data variables as global for later
 
-let games, plays, trackingWeek1
+let games, plays, trackingWeek1, gameId
 
 window.onload = function () {
     window.scrollTo(0, 0);
@@ -24,13 +24,25 @@ let promises = [
     // Test data to visualize a play
     d3.csv('data/testPlay.csv'),
 
+    d3.csv('data/plays.csv'),
+
     // To spead up development we only include the games promise
     d3.csv("data/plays.csv"),
     d3.csv("data/players.csv"),
     d3.csv("data/tackles.csv"),
-    d3.csv('data/tracking_week_1.csv'),
     d3.csv('data/timeline-text.csv'),
-    d3.csv("data/superbowl.csv")
+    d3.csv("data/superbowl.csv"),
+
+    // TrackingWeek data the reason why it takes so long to load!
+    // d3.csv('data/tracking_week_1.csv'),
+    // d3.csv('data/tracking_week_2.csv'),
+    // d3.csv('data/tracking_week_3.csv'),
+    // d3.csv('data/tracking_week_4.csv'),
+    // d3.csv('data/tracking_week_5.csv'),
+    // d3.csv('data/tracking_week_6.csv'),
+    // d3.csv('data/tracking_week_7.csv'),
+    // d3.csv('data/tracking_week_8.csv'),
+    // d3.csv('data/tracking_week_9.csv'),
 ];
 
 
@@ -50,15 +62,12 @@ function createVis(data) {
     let testPlay = data[2]
     let players = data[2]
     let teams = data[3]
-    trackingWeek1 = data[4]
+    // trackingWeek1 = data[6]
     let timelineText = data[7]
     let tackles = data[5]
     let superbowlWin = data[8]
-    // console.log(players)
-    // console.log(plays)
-    // console.log(teams)
-    // console.log(trackingWeek1)
-    // console.log(games)
+    // trackingWeek2 = data
+
     // It's faster to give as an array as supposed to looping through the lists each time the website is opened
     let teamsAbbr = ['LA', 'BUF', 'ATL', 'NO', 'CAR', 'CLE', 'CHI', 'SF', 'CIN', 'PIT', 'DET', 'PHI', 'HOU', 'IND', 'MIA', 'NE', 'NYJ', 'BAL', 'WAS', 'JAX', 'ARI', 'KC', 'LAC', 'LV', 'MIN', 'GB', 'TEN', 'NYG', 'DAL', 'TB', 'SEA', 'DEN']
 
@@ -161,21 +170,108 @@ function handleLogoClick(teamAbbr) {
     // on logo click update what teams to display for the play visualization
     teamVs.updateTeams([lastLogo, teamAbbr])
 
-    // the last clicked team will become the other team
-    lastLogo = teamAbbr
 
-    // on the selection of two teams send to wrangle data to find all plays for that game
+    // Select Field has TeamName in it
+    document.getElementById('selectOne').innerHTML += 'Possesion for ' + lastLogo;
+    document.getElementById('selectTwo').innerHTML += 'Possesion for ' + teamAbbr;
 
     // first find game ID
-
     let filteredGames = games.filter(game =>
-        (game.homeTeamAbbr === 'LA' && game.visitorTeamAbbr === 'BUF') ||
-        (game.homeTeamAbbr === 'BUF' && game.visitorTeamAbbr === 'LA')
+        (game.homeTeamAbbr === lastLogo && game.visitorTeamAbbr === teamAbbr) ||
+        (game.homeTeamAbbr === teamAbbr && game.visitorTeamAbbr === lastLogo)
     );
 
-    console.log(filteredGames);
+    if (filteredGames.length > 0) {
+        // If the two selected teams played each other than this should be more than 0
+        gameId = filteredGames[0].gameId;
+
+        let filteredPlays = plays.filter(play =>
+            (play.gameId === gameId) &(play.possessionTeam === lastLogo));
+
+        updateSelect('selectOne', filteredPlays);
+
+        let filteredPlaysTwo = plays.filter(play =>
+            (play.gameId === gameId) &(play.possessionTeam === teamAbbr));
+
+        updateSelect('selectTwo', filteredPlaysTwo)
+    } else {
+        // No games found
+        console.log("These two teams did not play each other.");
+        // You might also want to clear or update the select dropdown appropriately
+        updateSelect('selectOne', []);
+    }
+
+    // Create eventListener for both the select Options!
+    document.getElementById('selectOne').addEventListener('change', async function(event) {
+        const selectedValue = event.target.value;
+
+        // Wait for the fetchPlayData function to complete and get the result
+        let playData = await fetchPlayData(selectedValue, gameId);
+
+        // playData here will be the actual array from the resolved promise
+        console.log('Returned output here:');
+        console.log(playData);
+
+        // Use the playData to update the visualization
+        playVis.updateVisualization(playData);
+    });
+
+    document.getElementById('selectTwo').addEventListener('change', async function(event) {
+        const selectedValue = event.target.value;
+
+        // Wait for the fetchPlayData function to complete and get the result
+        let playData = await fetchPlayData(selectedValue, gameId);
+
+        // playData here will be the actual array from the resolved promise
+        console.log('Returned output here:');
+        console.log(playData);
+
+        // Use the playData to update the visualization
+        playVis.updateVisualization(playData);
+    });
+
+
+
+    // the last clicked team will become the other team
+    lastLogo = teamAbbr
 }
 
+// Request to API
+async function fetchPlayData(playId, gameId) {
+    try {
+        // Constructing URL
+        const url = new URL('http://localhost:9000/api/fetchArray');
+        url.search = new URLSearchParams({ play_id: playId, game_id: gameId });
+
+        // Get request
+        const response = await fetch(url);
+
+        // Parse the JSON response
+        return await response.json();
+
+    } catch (error) {
+        console.error('Failed to fetch data:', error);
+        return null; // throw error when something goes wrong when requesting data
+    }
+}
+
+
+function updateSelect(id, data){
+    const selectElement = document.getElementById(id);
+
+    // Clear existing options (except the first one)
+    for (let i = selectElement.options.length - 1; i > 0; i--) {
+        selectElement.remove(i);
+    }
+
+    // Add new options
+    data.forEach(play => {
+        const option = document.createElement('option');
+        option.value = play.playId; // Replace with a unique identifier from your play object
+        option.text = play.playDescription; // Replace with the text you want to display
+        selectElement.appendChild(option);
+    });
+}
 
 /* Set the width of the side navigation to 250px */
 function openNav() {
@@ -203,6 +299,7 @@ function handleUserSelection () {
 
 }
 
+
 // PlayVisualization
 // Get the button element
 
@@ -211,7 +308,7 @@ let nextFrameButton = document.getElementById("playButton");
 // Add event listener
 nextFrameButton.addEventListener("click", function() {
 
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 1000; i++) {
         // Update the visualization
         playVis.updatePlayersPosition(playVis.currentFrame);
 

@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc49145e-237f-407e-9d31-11ea097479ab" name="Changes" comment="Working version" />
+    <list default="true" id="fc49145e-237f-407e-9d31-11ea097479ab" name="Changes" comment="Working version">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/main.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/data/main.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/plays_creation.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/data/plays_creation.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/playVis.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/playVis.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,6 +54,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data" />
       <recent name="$PROJECT_DIR$/js" />
     </key>
   </component>
