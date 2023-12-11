@@ -188,7 +188,7 @@ class SuperVis {
         let tooltip = d3.select("#tooltip");
 
         // Set the content and position of the tooltip
-        tooltip.html(`<strong>${game.Winner}</strong>: ${game['WinnerPts']} - ${game['LoserPts']}<br>MVP: ${game.MVP}`)
+        tooltip.html(`<h5 style="font-size: 18px !important;"><strong>${game.Winner}</strong>: ${game['WinnerPts']} - ${game['LoserPts']}<br>Super Bowl: ${game.SB}<br>Date: ${game.Date}</h5>`)
            .style("left", (event.pageX + 10) + "px")
            .style("top", (event.pageY + 10) + "px")
            .style("opacity", 1);
