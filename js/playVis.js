@@ -18,6 +18,13 @@ class PlayVis {
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
         vis.height = 300 - vis.margin.top - vis.margin.bottom;
 
+        vis.width = 600; // This is the actual width of the SVG element on your webpage
+        vis.height = vis.width * (53.3 / 120); // Height is calculated to maintain the aspect ratio
+
+        // Assuming 'vis.width' is the full width you want to use for the SVG
+        vis.height = vis.width * (53.3 / 120); // This maintains the aspect ratio of the field
+
+
         // SVG drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
             .attr("width", vis.width + vis.margin.left + vis.margin.right)
@@ -27,12 +34,13 @@ class PlayVis {
 
         // Numbers are from the standard length of a football field :)
         vis.xScale = d3.scaleLinear()
-            .domain([0, 120]) // 0 to 120 yards for x-axis
+            .domain([0, 120])
             .range([0, vis.width]);
 
+        // Inverted yScale
         vis.yScale = d3.scaleLinear()
-            .domain([0, 53.3]) // 0 to 53.3 yards for y-axis
-            .range([vis.height, 0);
+            .domain([0, 53.3])
+            .range([vis.height, 0]);
         vis.wrangleData();
     }
 
@@ -89,7 +97,8 @@ class PlayVis {
             let initialPos = vis.testPlay.find(d => d.nflId === nflId && d.frameId === 1);
             console.log(initialPos)
             vis.svg.append('circle')
-                .attr('cx', vis.xScale(initialPos.x))
+                // .attr('cx', vis.xScale(initialPos.x))
+                .attr('cx', initialPos.x)
                 .attr('cy', vis.yScale(initialPos.y))
                 .attr('r', 5)
                 .attr('fill', nflId === 1 ? 'brown' : 'red')
