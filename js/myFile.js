@@ -12,7 +12,7 @@ class WinsVis {
     initVis() {
         let vis = this;
 
-        vis.margin = {top: 50, right: 50, bottom: 1000, left: 50};
+        vis.margin = {top: 50, right: 50, bottom: 900, left: 50};
 
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
 
@@ -60,7 +60,6 @@ class WinsVis {
                 pointsByTeamAndWeek[game.week][game.visitorTeamAbbr] += visitorScore;
             }
         });
-
 
 
         vis.pointsByTeamAndWeek = pointsByTeamAndWeek;
@@ -128,14 +127,19 @@ class WinsVis {
         // Axes for first chart
         vis.svg.append("g")
             .attr("transform", "translate(0," + vis.height + ")")
-            .call(xAxis);
+            .call(xAxis)
+            .style("stroke", "white")
+            .selectAll("line, path")
+            .style("stroke", "white");
 
         vis.svg.append("g")
-            .call(yAxis);
+            .call(yAxis)
+            .style("stroke", "white")
+            .selectAll("line, path")
+            .style("stroke", "white");
 
         // Make a line for each team and set color scale
         let teams = Array.from(new Set(dataForChart.map(d => d.team)));
-        //let colorScale = d3.scaleOrdinal().domain(teams).range(d3.schemeCategory10);
 
         teams.forEach(function (team) {
             let teamData = dataForChart.filter(d => d.team === team);
@@ -151,14 +155,8 @@ class WinsVis {
                 .style("stroke", "white")
                 .on("mouseover", function (event, d) {
 
-                    // let preHoverStroke = d3.select(this).style("stroke");
-
-                    // Style on hover using color scale
+                    // Hover style using colorscale
                     d3.select(this).style("stroke", colorScale(team));
-
-                    // Find closest data point using sep function
-                    //let mouseX = d3.pointer(event)[0];
-                    //let closestDataPoint = findClosestDataPoint(teamData, xScale.invert(mouseX));
 
                     vis.tooltip.html(`
              <h4>
@@ -174,9 +172,6 @@ class WinsVis {
                 .on("mouseout", function () {
 
                     // Reset
-                    //d3.select(this).style("stroke", preHoverStroke);
-                    //d3.select(this).style("stroke", "white");
-
                     if (team === clickedTeam) {
                         d3.select(this).style("stroke", "red");
                     }
@@ -184,10 +179,6 @@ class WinsVis {
                         d3.select(this).style("stroke", "white");
                     }
 
-
-                    // handleLogoClick(teamAbbr);
-                    //vis.highlightTeam(teamAbbr);
-                    //diagramVis.highlightTeam(teamAbbr);
                     vis.tooltip.transition().duration(200).style("opacity", 0);
 
                 });
@@ -225,8 +216,7 @@ class WinsVis {
             });
 
 
-
-        // Line for cumulative chart (and make a new group)
+        // Line for cumulative chart (& make a new group)
         let cumulativeLine = d3.line()
             .x(d => xScale(d.week))
             .y(d => cumulativeYScale(d.cumulative));
@@ -237,12 +227,18 @@ class WinsVis {
         // New axes
         cumulativeChartGroup.append("g")
             .attr("transform", "translate(0," + (vis.height * 2) + ")")
-            .call(xAxis);
+            .call(xAxis)
+            .style("stroke", "white")
+            .selectAll("line, path")
+            .style("stroke", "white");
 
         cumulativeChartGroup.append("g")
-            .call(yAxisCumulative);
+            .call(yAxisCumulative)
+            .style("stroke", "white")
+            .selectAll("line, path")
+            .style("stroke", "white");
 
-        // Draw a new line for each team
+        // Line for each team
         teams.forEach(function (team) {
             let teamData = dataForChart.filter(d => d.team === team);
 
@@ -258,10 +254,6 @@ class WinsVis {
                 .style("stroke", "white")
                 .on("mouseover", function (event, d) {
                     d3.select(this).style("stroke", colorScale(team));
-
-                    let mouseX = d3.pointer(event)[0];
-                    //let closestDataPoint = findClosestDataPoint(teamData, xScale.invert(mouseX));
-
                     vis.tooltip.html(`
                  <h4>
                      <strong class="tooltip-title">${team}</strong><br>
@@ -325,6 +317,7 @@ class WinsVis {
             .attr("text-anchor", "middle")
             .style("font-size", "16px")
             .style("font-weight", "bold")
+            .style("fill", "white")
             .text("Points Scored Each Week, by Team");
 
         vis.svg.append("text")
@@ -332,6 +325,7 @@ class WinsVis {
             .attr("y", vis.height + vis.margin.top)
             .attr("text-anchor", "middle")
             .style("font-size", "12px")
+            .style("fill", "white")
             .text("Week");
 
         vis.svg.append("text")
@@ -339,6 +333,7 @@ class WinsVis {
             .attr("y", -10)
             .attr("text-anchor", "middle")
             .style("font-size", "12px")
+            .style("fill", "white")
             .text("Points");
 
         cumulativeChartGroup.append("text")
@@ -347,12 +342,14 @@ class WinsVis {
             .attr("text-anchor", "middle")
             .style("font-size", "16px")
             .style("font-weight", "bold")
+            .style("fill", "white")
             .text("Cumulative Points Scored Each Week, by Team");
 
         cumulativeChartGroup.append("text")
             .attr("x", vis.width / 2)
             .attr("y", vis.height * 2 + vis.margin.top)
             .attr("text-anchor", "middle")
+            .style("fill", "white")
             .style("font-size", "12px")
             .text("Week");
 
@@ -361,6 +358,7 @@ class WinsVis {
             .attr("y", -10)
             .attr("text-anchor", "middle")
             .style("font-size", "12px")
+            .style("fill", "white")
             .text("Cumulative Points");
 
     }
@@ -386,11 +384,6 @@ class WinsVis {
             }
         });
 
-
-        console.log("DATA");
-        console.log(storeDefenseData);
-        console.log(storeOffenseData);
-
         // Find the data for the clickedTeam
         let defenseData = storeDefenseData.find(team => team.team === clickedTeam);
         let tackleAccuracy = defenseData ? defenseData.tackleAccuracy : 0;
@@ -399,6 +392,7 @@ class WinsVis {
         let passingAccuracy = offenseData ? offenseData.passingAccuracy : 0;
 
 
+        // Update the html elements. It was easier to just do this all in one place
         if (clickedTeam) {
             document.getElementById("cumulativePointsDisplay").innerHTML = `Cumulative Points: ${cumulativePoints}`;
             document.getElementById("cumulativePointsDisplay").style.opacity = 1;
@@ -436,15 +430,18 @@ class WinsVis {
             }
         });
 
+        // Display the selected team's logo in the middle of the page
         let logoDisplayContainer = d3.select(".logo-display");
 
         logoDisplayContainer.selectAll("img").remove();
 
         let logoImage = logoDisplayContainer.append("img")
             .attr("src", "data/logosWeb/" + teamAbbr + ".webp")
-            .attr("width", 500)
-            .attr("height", 500);
-
+            .style("width", "50%")
+            .style("height", "auto")
+            .style("display", "block")
+            .style("margin", "auto")
+            .style("padding-top", "22vh");
     }
 
 }
