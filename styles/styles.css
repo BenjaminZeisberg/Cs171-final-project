@@ -250,3 +250,10 @@ h5 {
     position: relative;
     overflow: hidden;
 }
+
+
+#vis-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

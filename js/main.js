@@ -234,6 +234,7 @@ function handleLogoClick(teamAbbr) {
 
         // Use the playData to update the visualization
         playVis.updateVisualization(playData);
+        playVis.updateVis();
     });
 
 

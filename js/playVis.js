@@ -108,16 +108,7 @@ class PlayVis {
                 .attr('text-anchor', 'middle')  // Center text horizontally
                 .text(nflId.jerseyNumber)
                 .attr('data-nflid', nflId);
-                //
-                // let jerseyNumber = initialPos.jerseyNumber; // Replace with the actual property if different
-                // vis.svg.append('text')
-                //     .attr('x', vis.xScale(initialPos.x))
-                //     .attr('y', vis.yScale(initialPos.y))
-                //     .attr('dy', ".35em") // This adjusts the position to vertically align the text
-                //     .attr('text-anchor', 'middle') // This centers the text horizontally on the x coordinate
-                //     .text(jerseyNumber) // Set the text to the jersey number
-                //     .attr('class', 'jersey-text')
-                //     .attr('id', `jersey-${nflId}`);
+
         });
     }
 
