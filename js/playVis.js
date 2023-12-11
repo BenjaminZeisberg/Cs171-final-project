@@ -32,7 +32,7 @@ class PlayVis {
 
         vis.yScale = d3.scaleLinear()
             .domain([0, 53.3]) // 0 to 53.3 yards for y-axis
-            .range([0, vis.height]);
+            .range([vis.height, 0);
         vis.wrangleData();
     }
 
