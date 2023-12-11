@@ -44,6 +44,10 @@ class SuperVis {
             .attr("class", "y-axis axis")
             .style("stroke", "white");
 
+        vis.tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 1);
+
         // Append y-axis title
         vis.svg.append("text")
         .attr("class", "axis-title") // Optional: for styling
@@ -86,6 +90,9 @@ class SuperVis {
             .attr("fill", d => colorScale(d.team))
             .on("mouseover", function(event, d) {
                 d3.select(this).style("fill", "white"); // Change color on hover
+                vis.tooltip.html(`<h3>${d.team}<br><img src="data/logosWeb/${d.team}.webp" width="50" height="50" alt="${d.team} logo"></h3>`)
+                    .style("left", (event.pageX + 100) + "px")
+                    .style("top", (event.pageY - 100) + "px");
             })
             .on("mouseout", function(event, d) {
                 d3.select(this).style("fill", ""); // Revert to original color on mouseout
