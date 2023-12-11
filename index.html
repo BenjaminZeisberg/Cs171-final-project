@@ -28,16 +28,51 @@
 <div class="navigation">
     <!-- Navigation bar -->
     <div id="sidenavLeft" class="sidenav" style="width: 150px">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNavLeft()">&times;</a>
+        <div class="dot-logos dot-logos-left" onclick="openNavLeft()"></div>
     </div>
 
     <div id="sidenavRight" class="sidenav" style="width: 150px">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNavRight()">&times;</a>
+        <div class="dot-logos dot-logos-right" onclick="openNavRight()"></div>
     </div>
 </div>
 
 <!-- Use any element to open the sidenav -->
 <!--    <span onclick="openNav()">open</span>-->
+
+<!-- Vertical Navbar -->
+<div class="vertical-navbar">
+    <div class="dot" data-section="section1">
+        <span class="label">Star Over</span>
+    </div>
+    <div class="dot" data-section="section2">
+        <span class="label">Timeline</span>
+    </div>
+    <div class="dot" data-section="section3">
+        <span class="label">Overview</span>
+    </div>
+    <div class="dot" data-section="section4">
+        <span class="label">Points</span>
+    </div>
+    <div class="dot" data-section="section5">
+        <span class="label">Games Won</span>
+    </div>
+    <div class="dot" data-section="section6">
+        <span class="label">Plays</span>
+    </div>
+    <div class="dot" data-section="section7">
+        <span class="label">Targeted Statistics</span>
+    </div>
+    <div class="dot" data-section="section8">
+        <span class="label">Superbowl Statistics</span>
+    </div>
+    <div class="dot" data-section="section9">
+        <span class="label">Overall Statistics</span>
+    </div>
+</div>
+
+
 
 <!-- Navigation bar -->
 <div class="header">
@@ -45,21 +80,27 @@
 </div>
 <!-- Wrapper -->
 <div id="fullpage">
-    <div class="section" id="section1">
+    <div class="section" id="section1" style="padding-bottom: 1500px;">
         <div class="container fluid">
-            <div class="row">
-                <div class="col-12">
-                    <h1>
-                        Football Data
-                    </h1>
-                    <h2 data-aos="fade-right">Select your team on the right and left side!</h2>
-                    <p>Click on the timeline to learn more about the sport!</p>
+
+
+        </div>
+    </div>
+
+
+    <div class="section" id="section2">
+        <div class="container fluid">
+
                 </div>
+                <div class="row row-padded" style="padding-bottom: 200px;">
                 <div class="col-12">
+                    <div class="row">
+                        <h2 data-aos="fade-right">How has the sport evolved over time?</h2>
+                    </div>
                     <div class="col-12" id="timeLine"></div>
                     <div class="row">
                         <div class="col-6">
-                            <div id="timelineText"></div>
+                            <div id="timelineText" data-aos="fade-right"></div>
                         </div>
                         <div class="col-6">
                             <div id="timelineImage"></div>
@@ -67,56 +108,99 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="section" id="section3" style="padding-bottom: 400px;">
+       <div class="container fluid">
+        <div class="row row-padded">
             <div class="col-12">
-                <h2 data-aos="fade-right">Superbowl statistics: number of wins</h2>
-                <select id="performanceSelector" class="button-style">
-                    <option value="bestOffensive">Best Offensive Performance</option>
-                    <option value="bestDefensive">Best Defensive Performance</option>
-                </select>
-                <div id="tooltip"></div>
-                <div class="col-12" id="superBowl"></div>
+                <h2 data-aos="fade-right">
+                    Who is going to win the next superbowl?
+                </h2>
             </div>
-            <div class="row">
+
+            <div class="row row-padded">
+                <div class="col-8">
+                    <h5 data-aos="zoom-in-down"
+                        data-aos-easing="ease-in-back"
+                        data-aos-duration="1500" data-aos-delay="200">Held annually, the Super Bowl features a captivating showdown among <span style="color: #e3453f;">32 teams</span> in the National Football League (NFL).</h5>
+
+                </div>
+                <div class="col-4">
+
+                </div>
+            </div>
+            <div class="row row-padded">
+                <div class="col-5">
+
+                </div>
+                <div class="col-7">
+                    <h5 data-aos="zoom-in-down"
+                        data-aos-easing="ease-in-back"
+                        data-aos-duration="1500" data-aos-delay="1000">With approximately <span style="color: #e3453f;">200 million viewers</span>, the Super Bowl stands as one of the most prominent events in the United States. </h5>
+
+
+                </div>
+            </div>
+            <div class="row row-padded">
+                <div class="col-12">
+                    <h5 data-aos="zoom-in-down"
+                        data-aos-easing="ease-in-back"
+                        data-aos-duration="1500" data-aos-delay="1800">Which team do you think is going to win next year? Choose a team by <span style="color: #e3453f;">clicking a logo. </h5>
+                </div>
+            </div>
+        </div>
+       </div>
+
+            <div class="row row-padded">
                 <div class="logo-display" data-aos="zoom-in-right" data-aos-duration="1000">
 
                 </div>
             </div>
-            <div class="row">
-                <div class="col-3">
+<!--            <div class="row">-->
+<!--                <div class="col-3">-->
 
-                </div>
-                <div class="col-9">
-                    <div class="stadium-graphic" data-aos="zoom-in-right" data-aos-duration="1000">
+<!--                </div>-->
+<!--                <div class="col-9">-->
+<!--                    <div class="stadium-graphic" data-aos="zoom-in-right" data-aos-duration="1000" style="padding-bottom: 200px;">-->
 
-                    </div>
+<!--                    </div>-->
 
-                </div>
+<!--                </div>-->
 
-            </div>
+<!--            </div>-->
+        </div>
+
+
+<div class="section" id="section4" >
+    <div class="container fluid">
+        <div class="row row-padded">
+        <h2 data-aos="fade-right">How many points has your team scored? </h2>
+        <p data-aos="fade-up">Here we display the wins over time. You can hover over each line to see how many points a given team has made until that week of games.</p>
+        <div id="winsTime"></div>
         </div>
     </div>
 </div>
 
-<div class="section" id="section2">
+<div class="section" id="section5">
     <div class="container fluid">
-        <h2 data-aos="fade-right">How many points has your team scored? </h2>
-        <p>Here we display the wins over time. You can hover over each line to see how many points a given team has made until that week of games.</p>
-        <div id="winsTime"></div>
-    </div>
-</div>
+        <div class="row row-padded">
+            <h2 data-aos="fade-right">How many games have they won?</h2>
+            <p data-aos="fade-up">Here you can see all teams at once. When hovering over a team logo you can see how they played, and red indicates that they lost to the other team, and green means they won. The Eagles have won all of their games so far! Who knows maybe they'll make it to the superbowl again!</p>
+            <div id="diagramVis" class="scroll-threshold"></div>
 
-<div class="section" id="section3">
-    <div class="container fluid">
-        <h2 data-aos="fade-right">How many games have they won?</h2>
-        <p>Here you can see all teams at once. When hovering over a team logo you can see how they played, and red indicates that they lost to the other team, and green means they won. The Eagles have won all of their games so far! Who knows maybe they'll make it to the superbowl again!</p>
-        <div id="diagramVis"></div>
+        </div>
     </div>
 </div>
 
 
-<div class="section" id="section4">
+<div class="section" id="section6" style="padding-bottom: 200px;">
     <div class="container fluid">
-        <h2 data-aos="fade-right">What is their most successful play?</h2>
+        <div class="row-padded row">
+            <h2 data-aos="fade-right">What is their most successful play?</h2>
+
+        </div>
+
         <div class='row'>
             <div id="teamVs"></div>
         </div>
@@ -129,9 +213,11 @@
     </div>
 </div>
 
+<div class="section" id="section7" style="padding-bottom: 200px;">
+    <div class="container fluid">
 <div class="row">
     <div class="col-12">
-        <div class="row">
+        <div class="row row-padded">
             <h2 data-aos="fade-right">Offensive and Defensive Statistics</h2>
         </div>
         <div class="row">
@@ -149,12 +235,32 @@
 
         </div>
 
-
+    </div>
+    </div>
     </div>
 
 </div>
 
-<div class="row">
+<div class="section" id="section8" style="padding-bottom: 200px;">
+    <div class="container fluid">
+<div class="row row-padded">
+    <div class="col-12">
+        <h2 data-aos="fade-right">Superbowl statistics: number of wins</h2>
+        <select id="performanceSelector" class="button-style">
+            <option value="bestOffensive">Best Offensive Performance</option>
+            <option value="bestDefensive">Best Defensive Performance</option>
+        </select>
+        <div id="tooltip"></div>
+        <div class="col-12" id="superBowl"></div>
+    </div>
+</div>
+    </div>
+</div>
+
+
+<div class="section" id="section9">
+    <div class="container fluid">
+<div class="row row-padded">
     <div class="col-6">
         <div class="helmet-graphic" data-aos="zoom-in-right" data-aos-duration="1000">
 
@@ -162,7 +268,7 @@
     </div>
     <div class="col-6">
         <h1 data-aos="fade-left">
-            Statistics
+            Overall Statistics
 
         </h1>
         <h3 id="selectTeamMessage" data-aos="fade-left" style="opacity: 1;">
@@ -188,8 +294,31 @@
             data-aos-duration="2000" style="opacity: 0;">
 
         </h3>
+        </div>
+    </div>
 
     </div>
+</div>
+
+<div class="container fluid" style="padding-top: 400px; text-align: center">
+    <h3 data-aos="fade-right">
+        Our team
+    </h3>
+    <h5>
+        Benjamin Zeisberg, Anjalika Ybema, James Lockowandt
+    </h5>
+    <div class="row" style="padding-top: 300px;">
+        <h5>
+            Sources
+        </h5>
+        <p style="text-align: left;">
+            https://www.nfl.com/standings/ <br>
+            https://www.kaggle.com/competitions/nfl-big-data-bowl-2024/data?select=games.csv <br>
+            https://www.ballstatedaily.com/article/2022/08/a-brief-history-of-the-super-bowl?ct=content_open&cv=cbox_latest <br>
+        </p>
+    </div>
+
+
 </div>
 
 <!-- Load JS libraries -->

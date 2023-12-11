@@ -48,6 +48,7 @@ class TeamsVs {
             .attr("x", vis.width / 2 - 50)
             .attr("y", vis.height / 2)
             .text("VS")
+            .style("fill", "white")
             .attr("font-size", "24px")
             .attr("text-anchor", "middle");
     }

@@ -3,7 +3,7 @@ let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
 // Declaring global variables
-let diagramVis, winsTime, playVis, xScale, offensiveVis, selectionDomain, timelineVis, clickedTeam, colorScale, storePoints, storeGames, storeDefenseData, storeOffenseData, teamVs, lastLogo;
+let diagramVis, winsTime, playVis, xScale, offensiveVis, superVis,  selectionDomain, timelineVis, clickedTeam, colorScale, storePoints, storeGames, storeDefenseData, storeOffenseData, teamVs, lastLogo;
 
 // declaring data variables as global for later
 
@@ -72,52 +72,51 @@ function createVis(data) {
     let logosVisRight = new LogosVis("sidenavRight", games, teamsAbbr.slice(16, 32));
 
 
-    // source: https://medialab.github.io/iwanthue/
+    // Universal colorscale so all vis are linked
     colorScale = d3.scaleOrdinal()
         .domain(teams)
-        .range(["#5268b7",
+        .range(["#a452b7",
             "#6e60e0",
             "#e7c83a",
-            "#617ee9",
+            "#8e61e9",
             "#3c9976",
-            "#b254c9", //S
-            "#74935f", //W
+            "#b254c9",
+            "#74935f",
             "#db53be",
-            "#e06555", //N
+            "#e06555",
             "#a4b5f2",
-            "#562dd0",
-            "#e5714f", //N
-            "#d34228", //N
-            "#d73f50", //N
-            "#41c4ce", //E
-            "#70e198", //W
-            "#ab5f30", //N
-            "#cc5c33", //N
-            "#ae4e97", //S
-            "#da417f", //S
-            "#5b92e0", //S
-            "#81d02d", //W
-            "#50a481", //W
+            "#8943c2",
+            "#e5714f",
+            "#d34228",
+            "#d73f50",
+            "#41c4ce",
+            "#70e198",
+            "#ab5f30",
+            "#cc5c33",
+            "#ae4e97",
+            "#da417f",
+            "#815be0",
+            "#81d02d",
+            "#50a481",
             "#e5c316",
-            "#a2b95d", //W
-            "#2c7ea9", //E
+            "#a2b95d",
+            "#2c7ea9",
             "#e18425",
-            "#236ead", //E
-            "#7990c5",
-            "#4a73a3", //E
-            "#35618f", //E
-            "#65c1f0", //E
-            "#b05054", //N
-            "#e3cd2e", //W
+            "#236ead",
+            "#bb79c5",
+            "#4a73a3",
+            "#35618f",
+            "#65c1f0",
+            "#b05054",
+            "#e3cd2e",
             "#e8d325",
-            "#e495d1", //S
-            "#df6e96", //S
-            "#3ba1d2", //E
+            "#e495d1",
+            "#df6e96",
+            "#3ba1d2",
             "#a45d82",
-            "#6d67a0"]); //S
+            "#6d67a0"]);
 
-    // console.log("cols" + colorScale);
-
+    navBarFunctionality();
 
     diagramVis = new DiagramVis("diagramVis", games, teamsAbbr);
     winsTime = new WinsVis("winsTime", games, teamsAbbr);
@@ -127,15 +126,17 @@ function createVis(data) {
     superVis = new SuperVis("superBowl", superbowlWin, teamsAbbr);
     teamVs = new TeamsVs('teamVs', ['LA', 'BUF'])
 
-    d3.xml("data/images/stadium.svg").then(function (xml) {
-        var svg = d3.select(".stadium-graphic").node();
-        svg.appendChild(xml.documentElement);
-    });
+    // d3.xml("data/images/stadium.svg").then(function (xml) {
+    //     var svg = d3.select(".stadium-graphic").node();
+    //     svg.appendChild(xml.documentElement);
+    // });
 
     d3.xml("data/images/helmet.svg").then(function (xml) {
         var svg = d3.select(".helmet-graphic").node();
         svg.appendChild(xml.documentElement);
     });
+
+    titleStyle();
 
     document.body.classList.add('loaded');
 }
@@ -144,13 +145,18 @@ function createVis(data) {
 lastLogo = 'LA'
 function handleLogoClick(teamAbbr) {
 
-    // Adjust window pos if above logo element
+    // Adjust window pos if above logo element, otherwise want the graphs to be updated and displayed immediately for the user (instead of scrolling back to logo display)
     let scrollTarget = document.querySelector(".logo-display");
 
-    if (window.scrollY < scrollTarget.getBoundingClientRect().top) {
+    let scrollThreshold = document.querySelector(".scroll-threshold");
+
+    if (window.scrollY < scrollThreshold.getBoundingClientRect().top) {
+
         // If above, scroll to the logo
         scrollTarget.scrollIntoView({ behavior: "smooth" });
     }
+
+    superVis.updateVis();
 
     handleUserSelection();
 
@@ -174,20 +180,31 @@ function handleLogoClick(teamAbbr) {
     );
 
     console.log(filteredGames);
+
+
 }
 
 
 /* Set the width of the side navigation to 250px */
-function openNav() {
+function openNavLeft() {
     document.getElementById("sidenavLeft").style.width = "150px";
-    // document.getElementById("sidenavRight").style.width = "250px";
 }
 
 /* Set the width of the side navigation to 0 */
-function closeNav() {
+function closeNavLeft() {
     document.getElementById("sidenavLeft").style.width = "0";
 }
 
+function openNavRight() {
+    document.getElementById("sidenavRight").style.width = "150px";
+}
+
+/* Set the width of the side navigation to 0 */
+function closeNavRight() {
+    document.getElementById("sidenavRight").style.width = "0";
+}
+
+// Use this to call either offensive or defensive view
 function handleUserSelection () {
     console.log("handleUserSelection called");
 
@@ -225,3 +242,37 @@ let resetButton = document.getElementById("resetButton");
 resetButton.addEventListener("click", function() {
     playVis.updatePlayersPosition(playVis.currentFrame = 1);
 });
+
+// Functionality for navbar
+function navBarFunctionality() {
+    document.querySelectorAll('.dot').forEach(dot => {
+        dot.addEventListener('click', function () {
+            const sectionId = dot.getAttribute('data-section');
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+
+}
+
+
+// Append the image and title
+function titleStyle() {
+
+    d3.select("#section1").append("img")
+        .attr("src", "data/images/nflfootball.jpg")
+        .style("width", "100vw")
+        .style("overflow", "hidden")
+        .style("position", "absolute")
+        .style("left", 0)
+        .style("top", 0);
+
+    d3.select("#section1").append("h1")
+        .text("Superbowl Predictions")
+        .style("font-size", "3em")
+        .style("position", "absolute")
+        .style("left", "50%")
+        .style("top", "50%")
+        .style("transform", "translate(-50%, -50%)")
+        .style("opacity", "85%");
+}

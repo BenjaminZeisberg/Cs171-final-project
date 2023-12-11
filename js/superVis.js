@@ -37,10 +37,12 @@ class SuperVis {
         // Append x and y axis groups
         vis.svg.append("g")
             .attr("class", "x-axis axis")
-            .attr("transform", "translate(0," + vis.height + ")");
+            .attr("transform", "translate(0," + vis.height + ")")
+            .style("stroke", "white");
 
         vis.svg.append("g")
-            .attr("class", "y-axis axis");
+            .attr("class", "y-axis axis")
+            .style("stroke", "white");
 
         // Append y-axis title
         vis.svg.append("text")
@@ -50,7 +52,8 @@ class SuperVis {
         .attr("x", 0 - (vis.height / 2)) // Center along the y-axis
         .attr("dy", "1em") // Adjust distance from the axis
         .style("text-anchor", "middle") // Center the text
-        .text("Number of Super Bowl Wins"); // The title text
+        .text("Number of Super Bowl Wins")
+            .style("fill", "white"); // The title text
 
         d3.select("#performanceSelector").on("change", function(event) {
             let selectedValue = d3.select(this).property("value");
@@ -70,6 +73,7 @@ class SuperVis {
         // Bind data to bars
         let bars = vis.svg.selectAll(".bar")
         .data(vis.dataArray);
+
 
         // Enter
         bars.enter().append("rect")
@@ -91,8 +95,12 @@ class SuperVis {
         bars.exit().remove();
 
         // Update the axes
-        vis.svg.select(".x-axis").call(vis.xAxis);
-        vis.svg.select(".y-axis").call(vis.yAxis);
+        vis.svg.select(".x-axis").call(vis.xAxis)
+            .selectAll("line, path")
+            .style("stroke", "white");
+        vis.svg.select(".y-axis").call(vis.yAxis)
+            .selectAll("line, path")
+            .style("stroke", "white");
 
     }
 
@@ -110,7 +118,40 @@ class SuperVis {
         vis.dataArray = Object.keys(vis.winCounts).filter(team => vis.winCounts[team] > 0)
                      .map(team => ({ team: team, wins: vis.winCounts[team] }))
                      .sort((a, b) => b.wins - a.wins); // Sort in descending order of wins
-        
+
+        // Map the teamnames to ensure the colorscale is consistent
+        function mapTeams(team) {
+            const teamMappings = {
+                'Patriots': 'NE',
+                'Steelers': 'PIT',
+                'Cowboys': 'DAL',
+                '49ers': 'SF',
+                'Giants': 'NYG',
+                'Packers': 'GB',
+                'Broncos': 'DEN',
+                'Redskins': 'WAS',
+                'Raiders': 'LV',
+                'Chiefs': 'KC',
+                'Ravens': 'BAL',
+                'Colts': 'IND',
+                'Dolphins': 'MIA',
+                'Eagles': 'PHI',
+                'Seahawks': 'SEA',
+                'Saints': 'NO',
+                'Buccaneers': 'TB',
+                'Rams': 'LA',
+                'Bears': 'CHI',
+                'Jets': 'NYJ',
+            };
+
+            return teamMappings[team] || team;
+        }
+
+        vis.dataArray = vis.dataArray.map(entry => ({
+            team: mapTeams(entry.team),
+            wins: entry.wins,
+        }));
+
         vis.updateVis();
     }
 
@@ -152,4 +193,5 @@ class SuperVis {
            .style("top", (event.pageY + 10) + "px")
            .style("opacity", 1);
     }
+
 }

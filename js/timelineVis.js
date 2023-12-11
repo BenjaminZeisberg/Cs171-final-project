@@ -69,7 +69,7 @@ class TimelineVis {
         .attr("class", "timeline-line")
         .attr("d", vis.line)
         .attr("fill", "none")
-        .attr("stroke", "black")
+        .attr("stroke", "white")
         .attr("stroke-width", 2);
 
         // Draw points on the timeline
@@ -80,26 +80,31 @@ class TimelineVis {
         .attr("cx", d => vis.x(d))
         .attr("cy", vis.height / 2)
         .attr("r", 10)
-        .attr("fill", '#1B4079');
+        .attr("fill", '#9da6b6');
 
          // Add text label for '1869' at the left edge
         vis.svg.append("text")
         .attr("x", - 20) // position at the start of the x-axis
         .attr("y", vis.height - vis.margin.bottom - 5) // position below the x-axis
         .attr("text-anchor", "start") // align text to the start
-        .text("1869");
+        .text("1869")
+            .style("fill", "white");
 
         // Add text label for 'Present' at the right edge
         vis.svg.append("text")
-            .attr("x", vis.width - vis.margin.right*4) // position at the end of the x-axis
+            .attr("x", vis.width - vis.margin.right*4 + 27) // position at the end of the x-axis
             .attr("y", vis.height - vis.margin.bottom - 5) // position below the x-axis
             .attr("text-anchor", "end") // align text to the end
-            .text("Present");
+            .text("Present")
+            .style("fill", "white");
 
             vis.points.on("click", function(event, d) {
                 // If there is a previously selected circle, reset its color
                 if (vis.selectedCircle) {
-                    vis.selectedCircle.attr("fill", '#1B4079');
+                    vis.selectedCircle.attr("fill", '#9da6b6');
+
+                    // Scroll to timeline section
+                    document.getElementById('section2').scrollIntoView({ behavior: 'smooth' });
                 }
 
                 // Change the color of the newly selected circle and update selectedCircle
@@ -116,7 +121,7 @@ class TimelineVis {
                 d3.select("#timelineImage").html(`<img src='${imageUrl}' alt='Timeline Image' style='width:100%;'>`);
         
                 // Update the text
-                d3.select("#timelineText").html(`<h3>${headerContent}</h3><p>${textContent}</p>`);
+                d3.select("#timelineText").html(`<h3 data-aos="fade-right">${headerContent}</h3><p data-aos="fade-right">${textContent}</p>`);
             });
 
     }
